@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>d22a13e4-1621-4973-97fd-21f6e986568d</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.11" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FaeterjAcademico.Domain\FaeterjAcademico.Domain.csproj" />
+    <ProjectReference Include="..\FaeterjAcademico.Application\FaeterjAcademico.Application.csproj" />
+    <ProjectReference Include="..\FaeterjAcademico.Infrastructure\FaeterjAcademico.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: faeterj-academico-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: faeterj
+      POSTGRES_PASSWORD: faeterj_dev_only
+      POSTGRES_DB: faeterj_academico
+    ports:
+      # 5435: esta máquina já tem 3 serviços nativos do PostgreSQL do Windows (15/16/18)
+      # ocupando 5432, 5433 e 5434 — ver README.md.
+      - "5435:5432"
+    volumes:
+      - faeterj-academico-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U faeterj -d faeterj_academico"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  faeterj-academico-db-data:
