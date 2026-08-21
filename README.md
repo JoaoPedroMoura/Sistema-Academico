@@ -4,6 +4,8 @@ Evolução do sistema descrito em [ANALISE-TCC.md](ANALISE-TCC.md) — de uma fe
 single-user (Admin) para uma aplicação web multiusuário, multi-tenant, com 4 papéis (Admin,
 Secretaria, Professor, Aluno). Decisões de stack e arquitetura em [ARCHITECTURE.md](ARCHITECTURE.md).
 
+Repositório: [github.com/JoaoPedroMoura/Sistema-Academico](https://github.com/JoaoPedroMoura/Sistema-Academico)
+
 ## Estrutura
 
 ```
