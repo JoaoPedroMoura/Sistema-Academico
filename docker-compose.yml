@@ -19,5 +19,45 @@ services:
       timeout: 5s
       retries: 10
 
+  api:
+    build:
+      context: .
+      dockerfile: src/FaeterjAcademico.Api/Dockerfile
+    container_name: faeterj-academico-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5100:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      # search_path por tenant é resolvido em runtime (ARCHITECTURE.md §3.4) — esta é só a
+      # connection string base, sem schema fixo.
+      ConnectionStrings__Default: "Host=postgres;Port=5432;Database=faeterj_academico;Username=faeterj;Password=faeterj_dev_only"
+      # Mesma chave dev usada via `dotnet user-secrets` fora do container — só para teste local,
+      # nunca um segredo real (ver README.md).
+      Jwt__SigningKey: "dev-only-change-me-in-production-minimum-32-chars-1234567890"
+      Frontend__Origin: "http://localhost:3000"
+
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      args:
+        # Embutido no bundle do browser em build time — precisa ser a URL que o navegador do
+        # host enxerga (porta publicada da Api), não o nome do serviço Docker.
+        NEXT_PUBLIC_API_URL: http://localhost:5100
+    container_name: faeterj-academico-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    environment:
+      # Server-side (rotas BFF/SSR, dentro da rede Docker) — usa o nome do serviço.
+      API_INTERNAL_URL: "http://api:8080"
+      NEXT_PUBLIC_API_URL: "http://localhost:5100"
+
 volumes:
   faeterj-academico-db-data:
