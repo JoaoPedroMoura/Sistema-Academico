@@ -17,6 +17,12 @@ public interface IAcademicoRepository
     Task AddProfessorAsync(Professor professor, CancellationToken cancellationToken);
     void RemoveProfessor(Professor professor);
     Task<bool> ProfessorTemVinculoComMateriaAsync(Guid professorId, CancellationToken cancellationToken);
+
+    /// <summary>Professor alocado em alguma Turma de qualquer Grade (não só a ativa) — precisa
+    /// ser checado antes de excluir, senão a FK <c>Turmas.ProfessorId</c> quebra o delete
+    /// (era um 500 antes desta checagem existir).</summary>
+    Task<bool> ProfessorTemTurmaVinculadaAsync(Guid professorId, CancellationToken cancellationToken);
+
     Task<Professor?> GetProfessorByAccountIdAsync(Guid accountId, CancellationToken cancellationToken);
 
     // Matérias

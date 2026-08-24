@@ -24,6 +24,11 @@ public sealed class AcademicoRepository(AcademicoDbContext db) : IAcademicoRepos
     public Task<bool> ProfessorTemVinculoComMateriaAsync(Guid professorId, CancellationToken cancellationToken) =>
         db.MateriaProfessores.AnyAsync(v => v.ProfessorId == professorId, cancellationToken);
 
+    // Qualquer Grade, não só a ativa — uma Grade arquivada/rascunho ainda tem a FK apontando pro
+    // professor, e o delete quebra do mesmo jeito.
+    public Task<bool> ProfessorTemTurmaVinculadaAsync(Guid professorId, CancellationToken cancellationToken) =>
+        db.Turmas.AnyAsync(t => t.ProfessorId == professorId, cancellationToken);
+
     public Task<Professor?> GetProfessorByAccountIdAsync(Guid accountId, CancellationToken cancellationToken) =>
         db.Professores.Include(p => p.Disponibilidades).SingleOrDefaultAsync(p => p.AccountId == accountId, cancellationToken);
 

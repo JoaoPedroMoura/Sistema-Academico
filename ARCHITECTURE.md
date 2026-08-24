@@ -486,6 +486,25 @@ devolve `precisaTrocarSenha: true` → browser real redireciona pra `/trocar-sen
 trocar, cai na área do Professor normalmente → login de novo com a senha antiga dá 401, com a nova
 devolve `precisaTrocarSenha: false`.
 
+## 7.6 Bug real: exclusão de Professor alocado em Turma quebrava com 500
+
+Reportado pelo usuário testando via browser: `DELETE /api/professores/{id}` de um professor que
+já tinha sido alocado numa Turma por uma Grade gerada (mesmo uma Grade antiga/não-ativa) estourava
+`DbUpdateException` — FK `FK_Turmas_Professores_ProfessorId` — e virava 500. A checagem de bloqueio
+existente (`ProfessorTemVinculoComMateriaAsync`) só cobria o vínculo com Matéria, não a alocação em
+Turma.
+
+Corrigido com o mesmo padrão já usado para o caso de Matéria: nova
+`ProfessorTemTurmaVinculadaAsync` (checa `Turmas.ProfessorId` em qualquer Grade, não só a ativa —
+uma Grade arquivada ainda tem a FK) em `ExcluirProfessorHandler`, bloqueando antes do delete com
+uma `UseCaseException` (→ 400, mensagem clara) em vez de deixar o Postgres estourar a constraint
+(→ 500 genérico). Tentativa bloqueada também vira `LogSistema`, mesmo padrão do caso de Matéria.
+
+Regra que não existia no TCC original (lá a exclusão era single-user, sem o conceito de grade já
+publicada persistir depois — ANALISE-TCC.md). Validado via curl reproduzindo o request exato do
+bug report (professor com turma alocada → 400 com mensagem) e um caso de regressão (professor sem
+nenhum vínculo → 204 normal).
+
 ## 8. Trabalho futuro (fora do escopo desta fase, registrado por decisão do usuário)
 
 - Restrição de sala disponível e capacidade de alunos por turma no motor GRASP.
