@@ -33,6 +33,10 @@ public sealed record LoginResult
     public string? TenantNome { get; init; }
     public Role? Role { get; init; }
 
+    /// <summary>Espelha <see cref="Account.DeveTrocarSenha"/> — o frontend força a tela de troca
+    /// de senha antes de liberar o resto da área quando true (ARCHITECTURE.md §7.5).</summary>
+    public bool PrecisaTrocarSenha { get; init; }
+
     public static LoginResult PrecisaEscolherTenant(IReadOnlyList<TenantOption> opcoes) =>
         new() { Status = LoginStatus.PrecisaEscolherTenant, OpcoesDeTenant = opcoes };
 
@@ -57,5 +61,6 @@ public sealed record LoginResult
             TenantSlug = tenant.Slug,
             TenantNome = tenant.Nome,
             Role = role,
+            PrecisaTrocarSenha = account.DeveTrocarSenha,
         };
 }

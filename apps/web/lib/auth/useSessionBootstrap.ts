@@ -38,6 +38,7 @@ export function useSessionBootstrap() {
             tenantSlug: data.tenantSlug,
             tenantName: data.tenantNome,
             role: data.role,
+            precisaTrocarSenha: data.precisaTrocarSenha ?? false,
           },
           data.accessToken,
         );

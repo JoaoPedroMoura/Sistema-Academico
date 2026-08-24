@@ -461,6 +461,31 @@ para esta fase — mesma lacuna já registrada no §8 para o Professor), e fluxo
 → consulta de notas/presença/materiais → abertura de uma nova solicitação → aparecendo
 imediatamente na lista com status "Aberta".
 
+## 7.5 Troca obrigatória de senha temporária
+
+Toda conta criada por Admin/Secretaria (Professor, Aluno) nasce com uma senha temporária
+(`TemporaryPasswordGenerator`) — até aqui, nada impedia o usuário de continuar usando ela para
+sempre. Adicionado: `Account.DeveTrocarSenha` (schema `identity`, migration
+`AddDeveTrocarSenhaToAccount`), `true` só quando a conta é criada via `Account(..., senhaTemporaria:
+true)` — contas semeadas direto por SQL (Admin/Secretaria iniciais) e as já existentes no banco
+antes desta migration ficam `false` (default explícito na coluna).
+
+**Decisão de escopo — enforcement é client-side, não um novo boundary de segurança no backend:**
+`LoginResult`/`RefreshTokenResult` passam `PrecisaTrocarSenha` pro frontend, que redireciona pra
+`/trocar-senha` antes de liberar qualquer área (`RequireRole` checa a flag antes até do papel).
+O backend **não** bloqueia os outros endpoints enquanto a flag é true — só oferece
+`POST /api/me/trocar-senha` (exige a senha atual, autenticado, sem restrição de Role) que a limpa.
+Coerente com o resto do projeto: `RequireRole` já é documentado como UX, não boundary (o boundary
+real são `proxy.ts` + `[Authorize(Roles=...)]` por endpoint) — "ainda não trocou a senha temporária"
+não é uma questão de autorização entre usuários, então não justifica um filtro global em todo
+Controller. Se um usuário decidir ignorar o redirect e chamar outro endpoint manualmente com o
+token, ele consegue — mas só nos dados que o próprio papel dele já tem acesso.
+
+Validado de ponta a ponta com um professor de teste criado via Admin: login com a senha temporária
+devolve `precisaTrocarSenha: true` → browser real redireciona pra `/trocar-senha` → depois de
+trocar, cai na área do Professor normalmente → login de novo com a senha antiga dá 401, com a nova
+devolve `precisaTrocarSenha: false`.
+
 ## 8. Trabalho futuro (fora do escopo desta fase, registrado por decisão do usuário)
 
 - Restrição de sala disponível e capacidade de alunos por turma no motor GRASP.

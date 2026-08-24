@@ -24,6 +24,7 @@ export interface LoginResponse {
   tenantSlug?: string;
   tenantNome?: string;
   role?: Role;
+  precisaTrocarSenha?: boolean;
 }
 
 export interface MeResponse {
@@ -69,4 +70,12 @@ export const authApi = {
   // Este vai direto na API .NET (Bearer token, sem cookie) — não passa pelo BFF.
   me: (accessToken: string, tenantSlug: string) =>
     httpClient.get<MeResponse>("/api/me", { accessToken, tenantSlug }),
+
+  // Idem — ação autenticada comum, não tem nada a ver com o cookie de refresh do BFF.
+  trocarSenha: (accessToken: string, tenantSlug: string, senhaAtual: string, novaSenha: string) =>
+    httpClient.post<void>(
+      "/api/me/trocar-senha",
+      { senhaAtual, novaSenha },
+      { accessToken, tenantSlug },
+    ),
 };

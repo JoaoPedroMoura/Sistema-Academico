@@ -12,4 +12,5 @@ public sealed record RefreshTokenResult(
     string Email,
     string TenantSlug,
     string TenantNome,
-    Role Role);
+    Role Role,
+    bool PrecisaTrocarSenha);

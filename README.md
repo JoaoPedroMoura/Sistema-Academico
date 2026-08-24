@@ -107,7 +107,8 @@ normalmente.
 ## Checklist de qualidade final (Fase 8)
 
 - ✅ `dotnet build` na solution inteira: **0 erros, 0 warnings**.
-- ✅ `dotnet test`: **42/42 testes passando** (17 Application + 25 Domain).
+- ✅ `dotnet test`: **51/51 testes passando** (23 Application + 28 Domain — inclui o fluxo de troca
+  de senha temporária, ver ARCHITECTURE.md §7.5).
 - ✅ `dotnet list package --vulnerable --include-transitive`: nenhuma dependência vulnerável.
 - ✅ Frontend: `npx tsc --noEmit`, `npx eslint .` e `npm run build` — todos limpos, sem erros nem
   warnings.

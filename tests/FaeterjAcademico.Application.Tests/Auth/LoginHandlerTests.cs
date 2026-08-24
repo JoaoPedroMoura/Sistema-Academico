@@ -12,9 +12,9 @@ public class LoginHandlerTests
 
     private LoginHandler CreateHandler() => new(_repository, _hasher, _jwt);
 
-    private Account AdicionarConta(string email, string senha, bool ativo = true)
+    private Account AdicionarConta(string email, string senha, bool ativo = true, bool senhaTemporaria = false)
     {
-        var account = new Account("Fulano", email, _hasher.Hash(senha));
+        var account = new Account("Fulano", email, _hasher.Hash(senha), senhaTemporaria);
         if (!ativo)
         {
             account.Desativar();
@@ -53,6 +53,20 @@ public class LoginHandlerTests
         Assert.Equal("petropolis", resultado.TenantSlug);
         Assert.Single(_repository.RefreshTokens);
         Assert.Contains(_repository.LoginAudits, a => a.Sucesso);
+        Assert.False(resultado.PrecisaTrocarSenha);
+    }
+
+    [Fact]
+    public async Task Login_ContaComSenhaTemporaria_RetornaPrecisaTrocarSenha()
+    {
+        var account = AdicionarConta("joao@faeterj.edu.br", "SenhaTemp123", senhaTemporaria: true);
+        var tenant = AdicionarTenant("petropolis");
+        Vincular(account, tenant, Role.Professor);
+
+        var resultado = await CreateHandler().HandleAsync(new LoginCommand("joao@faeterj.edu.br", "SenhaTemp123", null, null));
+
+        Assert.Equal(LoginStatus.Sucesso, resultado.Status);
+        Assert.True(resultado.PrecisaTrocarSenha);
     }
 
     [Fact]

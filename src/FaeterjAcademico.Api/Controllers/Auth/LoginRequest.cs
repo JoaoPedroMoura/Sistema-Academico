@@ -14,4 +14,5 @@ public sealed record LoginResponse(
     string? Email,
     string? TenantSlug,
     string? TenantNome,
-    string? Role);
+    string? Role,
+    bool PrecisaTrocarSenha);

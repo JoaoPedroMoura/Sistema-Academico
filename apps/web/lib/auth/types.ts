@@ -7,4 +7,7 @@ export interface Session {
   tenantSlug: string;
   tenantName: string;
   role: Role;
+  /** Senha atual é a temporária gerada na criação da conta — frontend força a troca antes de
+   * liberar a área (ARCHITECTURE.md §7.5). */
+  precisaTrocarSenha: boolean;
 }

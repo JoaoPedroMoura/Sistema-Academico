@@ -34,7 +34,7 @@ public sealed class CriarProfessorHandler(
         }
 
         var senhaTemporaria = TemporaryPasswordGenerator.Gerar();
-        var account = new Account(request.Nome, emailNormalizado, passwordHasher.Hash(senhaTemporaria));
+        var account = new Account(request.Nome, emailNormalizado, passwordHasher.Hash(senhaTemporaria), senhaTemporaria: true);
         await identityRepository.AddAccountAsync(account, cancellationToken);
         await identityRepository.AddAccountTenantRoleAsync(
             new AccountTenantRole(account.Id, currentTenant.TenantId, Role.Professor), cancellationToken);

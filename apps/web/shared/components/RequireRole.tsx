@@ -23,7 +23,16 @@ export function RequireRole({ role, children }: RequireRoleProps) {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "ready" && session && session.role !== role) {
+    if (status !== "ready" || !session) {
+      return;
+    }
+    // Senha temporária ainda não trocada: barra qualquer área até isso ser resolvido, não só a
+    // de outro papel — mesma ideia do redirect abaixo, mas checada primeiro (ARCHITECTURE.md §7.5).
+    if (session.precisaTrocarSenha) {
+      router.replace("/trocar-senha");
+      return;
+    }
+    if (session.role !== role) {
       router.replace(roleHomePath(session.role));
     }
   }, [status, session, role, router]);
@@ -36,7 +45,7 @@ export function RequireRole({ role, children }: RequireRoleProps) {
     );
   }
 
-  if (!session || session.role !== role) {
+  if (!session || session.role !== role || session.precisaTrocarSenha) {
     return null; // redirecionando (useEffect acima) ou useSessionBootstrap já mandou pro /login
   }
 

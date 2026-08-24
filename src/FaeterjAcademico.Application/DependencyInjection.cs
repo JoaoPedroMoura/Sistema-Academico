@@ -4,6 +4,7 @@ using FaeterjAcademico.Application.Attendance.RegistrarPresenca;
 using FaeterjAcademico.Application.Auth.Login;
 using FaeterjAcademico.Application.Auth.Logout;
 using FaeterjAcademico.Application.Auth.Refresh;
+using FaeterjAcademico.Application.Auth.TrocarSenha;
 using FaeterjAcademico.Application.Marks.LancarNota;
 using FaeterjAcademico.Application.Marks.ListarMinhasNotas;
 using FaeterjAcademico.Application.Marks.ListarNotas;
@@ -49,6 +50,7 @@ public static class DependencyInjection
         .AddScoped<LoginHandler>()
         .AddScoped<RefreshTokenHandler>()
         .AddScoped<LogoutHandler>()
+        .AddScoped<TrocarSenhaHandler>()
         // Teachers
         .AddScoped<CriarProfessorHandler>()
         .AddScoped<AtualizarProfessorHandler>()

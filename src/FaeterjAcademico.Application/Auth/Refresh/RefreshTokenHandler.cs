@@ -58,6 +58,7 @@ public sealed class RefreshTokenHandler(
             conta.Email,
             tenant.Slug,
             tenant.Nome,
-            vinculo.Role);
+            vinculo.Role,
+            conta.DeveTrocarSenha);
     }
 }

@@ -52,7 +52,8 @@ public class AuthController(
                 Email: null,
                 TenantSlug: null,
                 TenantNome: null,
-                Role: null));
+                Role: null,
+                PrecisaTrocarSenha: false));
         }
 
         SetRefreshCookie(result.RefreshToken!, result.RefreshTokenExpiresAtUtc!.Value);
@@ -67,7 +68,8 @@ public class AuthController(
             Email: result.Email,
             TenantSlug: result.TenantSlug,
             TenantNome: result.TenantNome,
-            Role: result.Role?.ToString()));
+            Role: result.Role?.ToString(),
+            PrecisaTrocarSenha: result.PrecisaTrocarSenha));
     }
 
     [HttpPost("refresh")]
@@ -101,7 +103,8 @@ public class AuthController(
             Email: result.Email,
             TenantSlug: result.TenantSlug,
             TenantNome: result.TenantNome,
-            Role: result.Role.ToString()));
+            Role: result.Role.ToString(),
+            PrecisaTrocarSenha: result.PrecisaTrocarSenha));
     }
 
     [HttpPost("logout")]

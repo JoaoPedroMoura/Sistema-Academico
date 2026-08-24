@@ -26,6 +26,8 @@ export function useLogin() {
         return;
       }
 
+      const precisaTrocarSenha = data.precisaTrocarSenha ?? false;
+
       setSession(
         {
           accountId: data.accountId,
@@ -34,11 +36,12 @@ export function useLogin() {
           tenantSlug: data.tenantSlug,
           tenantName: data.tenantNome,
           role: data.role,
+          precisaTrocarSenha,
         },
         data.accessToken,
       );
 
-      router.push(roleHomePath(data.role));
+      router.push(precisaTrocarSenha ? "/trocar-senha" : roleHomePath(data.role));
     },
   });
 }
