@@ -16,6 +16,7 @@ using FaeterjAcademico.Application.Requests.AbrirSolicitacao;
 using FaeterjAcademico.Application.Requests.ListarMinhasSolicitacoes;
 using FaeterjAcademico.Application.Requests.ListarSolicitacoes;
 using FaeterjAcademico.Application.Requests.TriarSolicitacao;
+using FaeterjAcademico.Application.Schedule.ExcluirGrade;
 using FaeterjAcademico.Application.Schedule.GerarGrade;
 using FaeterjAcademico.Application.Schedule.ListarGrades;
 using FaeterjAcademico.Application.Schedule.ObterGradeAtiva;
@@ -75,6 +76,7 @@ public static class DependencyInjection
         .AddScoped<GerarGradeHandler>()
         .AddScoped<ObterGradeAtivaHandler>()
         .AddScoped<ListarGradesHandler>()
+        .AddScoped<ExcluirGradeHandler>()
         // Students
         .AddScoped<CriarAlunoHandler>()
         .AddScoped<AtualizarAlunoHandler>()

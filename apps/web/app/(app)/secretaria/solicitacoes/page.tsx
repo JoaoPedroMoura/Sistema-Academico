@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useSolicitacoes } from "@/features/requests/hooks/useRequests";
 import { RequestList } from "@/features/requests/components/RequestList";
 import type { StatusSolicitacao } from "@/features/requests/types";
+import { BackLink } from "@/shared/components/BackLink";
 
 const FILTROS: { label: string; value: StatusSolicitacao | undefined }[] = [
   { label: "Todas", value: undefined },
@@ -19,6 +20,7 @@ export default function SolicitacoesPage() {
 
   return (
     <div className="space-y-6 p-8">
+      <BackLink href="/secretaria" label="Área da Secretaria" />
       <h1 className="text-xl font-semibold">Solicitações</h1>
 
       <div className="flex gap-2">

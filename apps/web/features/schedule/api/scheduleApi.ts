@@ -14,4 +14,6 @@ export const scheduleApi = {
       throw error;
     }
   },
+
+  excluir: (auth: HttpClientOptions, id: string) => httpClient.delete<void>(`/api/grades/${id}`, auth),
 };

@@ -505,6 +505,26 @@ publicada persistir depois — ANALISE-TCC.md). Validado via curl reproduzindo o
 bug report (professor com turma alocada → 400 com mensagem) e um caso de regressão (professor sem
 nenhum vínculo → 204 normal).
 
+## 7.7 Exclusão de Grade + navegação "voltar" nas subpáginas
+
+Duas melhorias de UX pedidas pelo usuário depois de testar a Fase 7 no browser:
+
+**Excluir grade** — não existia no TCC original (lá só se gerava grade, nunca se descartava uma).
+`DELETE /api/grades/{id}` (`ExcluirGradeHandler`), mesmo padrão de guarda que o bug do §7.6: bloqueia
+se qualquer Turma da grade já tem Nota ou Presença lançada (`GradeTemDadosAcademicosLancadosAsync`
+— essas FKs também são `Restrict`, sem a checagem o delete quebraria do mesmo jeito). Materiais
+complementares são `Cascade` e somem junto — são só links, não histórico. Botão "Excluir grade"
+aparece em `admin/grade` e `secretaria/grade` só quando há uma grade ativa pra excluir, com
+`window.confirm` antes (única confirmação desse tipo no projeto — justificada por ser uma exclusão
+estrutural, não uma linha de tabela como Professor/Matéria). Validado via curl: grade com dados
+acadêmicos → 400 bloqueado; grade recém-gerada sem dados → 204.
+
+**Navegação "voltar"** — `professor/disponibilidade`, `professor/turmas/[id]` e as subpáginas do
+Aluno já tinham um link "← [Área]" pro menu principal do papel; `admin/professores`,
+`admin/materias`, `admin/grade`, `secretaria/alunos`, `secretaria/materias`, `secretaria/grade` e
+`secretaria/solicitacoes` não tinham. Centralizado num componente `BackLink`
+(`shared/components/BackLink.tsx`) e adicionado nas 7 páginas que faltavam.
+
 ## 8. Trabalho futuro (fora do escopo desta fase, registrado por decisão do usuário)
 
 - Restrição de sala disponível e capacidade de alunos por turma no motor GRASP.

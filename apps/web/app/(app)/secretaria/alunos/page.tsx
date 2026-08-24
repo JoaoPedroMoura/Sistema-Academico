@@ -3,12 +3,14 @@
 import { useAlunos } from "@/features/students/hooks/useStudents";
 import { StudentTable } from "@/features/students/components/StudentTable";
 import { StudentForm } from "@/features/students/components/StudentForm";
+import { BackLink } from "@/shared/components/BackLink";
 
 export default function AlunosPage() {
   const { data: alunos, isLoading } = useAlunos();
 
   return (
     <div className="space-y-6 p-8">
+      <BackLink href="/secretaria" label="Área da Secretaria" />
       <h1 className="text-xl font-semibold">Alunos</h1>
 
       <div className="grid gap-6 lg:grid-cols-2">

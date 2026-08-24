@@ -1,4 +1,5 @@
 using FaeterjAcademico.Application.Schedule.Dtos;
+using FaeterjAcademico.Application.Schedule.ExcluirGrade;
 using FaeterjAcademico.Application.Schedule.GerarGrade;
 using FaeterjAcademico.Application.Schedule.ListarGrades;
 using FaeterjAcademico.Application.Schedule.ObterGradeAtiva;
@@ -14,7 +15,8 @@ namespace FaeterjAcademico.Api.Controllers.Schedule;
 public class GradesController(
     GerarGradeHandler gerarHandler,
     ObterGradeAtivaHandler obterAtivaHandler,
-    ListarGradesHandler listarHandler) : ControllerBase
+    ListarGradesHandler listarHandler,
+    ExcluirGradeHandler excluirHandler) : ControllerBase
 {
     [HttpPost("gerar")]
     public async Task<ActionResult<GerarGradeResultDto>> Gerar([FromQuery] int? iterations, CancellationToken cancellationToken) =>
@@ -30,4 +32,11 @@ public class GradesController(
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<GradeResumoDto>>> Listar(CancellationToken cancellationToken) =>
         Ok(await listarHandler.HandleAsync(new ListarGradesQuery(), cancellationToken));
+
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Excluir(Guid id, CancellationToken cancellationToken)
+    {
+        await excluirHandler.HandleAsync(new ExcluirGradeCommand(id), cancellationToken);
+        return NoContent();
+    }
 }

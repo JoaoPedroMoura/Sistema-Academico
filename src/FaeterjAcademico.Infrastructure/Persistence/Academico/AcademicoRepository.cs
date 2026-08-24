@@ -80,6 +80,19 @@ public sealed class AcademicoRepository(AcademicoDbContext db) : IAcademicoRepos
     public async Task AddGradeAsync(Grade grade, CancellationToken cancellationToken) =>
         await db.Grades.AddAsync(grade, cancellationToken);
 
+    public void RemoveGrade(Grade grade) => db.Grades.Remove(grade);
+
+    public async Task<bool> GradeTemDadosAcademicosLancadosAsync(Guid gradeId, CancellationToken cancellationToken)
+    {
+        var temNota = await db.Notas.AnyAsync(n => db.Turmas.Any(t => t.Id == n.TurmaId && t.GradeId == gradeId), cancellationToken);
+        if (temNota)
+        {
+            return true;
+        }
+
+        return await db.Presencas.AnyAsync(p => db.Turmas.Any(t => t.Id == p.TurmaId && t.GradeId == gradeId), cancellationToken);
+    }
+
     // Turmas — só as da grade publicada mais recente ("minha grade" do professor hoje).
     public async Task<IReadOnlyList<Turma>> GetTurmasByProfessorIdAsync(Guid professorId, CancellationToken cancellationToken)
     {

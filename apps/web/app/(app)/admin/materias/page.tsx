@@ -4,6 +4,7 @@ import { useMaterias, useExcluirMateria } from "@/features/subjects/hooks/useSub
 import { SubjectTable } from "@/features/subjects/components/SubjectTable";
 import { SubjectForm } from "@/features/subjects/components/SubjectForm";
 import { VinculoManager } from "@/features/subjects/components/VinculoManager";
+import { BackLink } from "@/shared/components/BackLink";
 
 export default function MateriasPage() {
   const { data: materias, isLoading } = useMaterias();
@@ -11,6 +12,7 @@ export default function MateriasPage() {
 
   return (
     <div className="space-y-6 p-8">
+      <BackLink href="/admin" label="Área do Admin" />
       <h1 className="text-xl font-semibold">Matérias</h1>
 
       <div className="grid gap-6 lg:grid-cols-2">

@@ -46,6 +46,12 @@ public interface IAcademicoRepository
     Task<IReadOnlyList<Grade>> GetGradesAsync(CancellationToken cancellationToken);
     Task<Grade?> GetGradeByIdAsync(Guid id, CancellationToken cancellationToken);
     Task AddGradeAsync(Grade grade, CancellationToken cancellationToken);
+    void RemoveGrade(Grade grade);
+
+    /// <summary>True se alguma Turma desta Grade já tem Nota ou Presença lançada — bloqueia a
+    /// exclusão (Turmas→Notas/Presenças é <c>DeleteBehavior.Restrict</c>, então sem essa checagem
+    /// o delete quebraria a FK, igual ao caso de Professor — ver ARCHITECTURE.md §7.6).</summary>
+    Task<bool> GradeTemDadosAcademicosLancadosAsync(Guid gradeId, CancellationToken cancellationToken);
 
     // Turmas (aulas alocadas na grade ativa — "minhas turmas" do Professor)
     Task<IReadOnlyList<Turma>> GetTurmasByProfessorIdAsync(Guid professorId, CancellationToken cancellationToken);

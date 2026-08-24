@@ -28,3 +28,12 @@ export function useGerarGrade() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: GRADE_KEY }),
   });
 }
+
+export function useExcluirGrade() {
+  const auth = useAuth();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => scheduleApi.excluir(auth, id),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: GRADE_KEY }),
+  });
+}

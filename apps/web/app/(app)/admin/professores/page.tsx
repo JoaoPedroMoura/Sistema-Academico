@@ -5,6 +5,7 @@ import { useProfessores, useExcluirProfessor } from "@/features/teachers/hooks/u
 import { TeacherTable } from "@/features/teachers/components/TeacherTable";
 import { TeacherForm } from "@/features/teachers/components/TeacherForm";
 import { TeacherAvailabilityEditor } from "@/features/teachers/components/TeacherAvailabilityEditor";
+import { BackLink } from "@/shared/components/BackLink";
 
 export default function ProfessoresPage() {
   const [selecionadoId, setSelecionadoId] = useState<string | null>(null);
@@ -13,6 +14,7 @@ export default function ProfessoresPage() {
 
   return (
     <div className="space-y-6 p-8">
+      <BackLink href="/admin" label="Área do Admin" />
       <h1 className="text-xl font-semibold">Professores</h1>
 
       <div className="grid gap-6 lg:grid-cols-2">
