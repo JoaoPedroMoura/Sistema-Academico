@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useAbrirSolicitacao, useMinhasSolicitacoes } from "../hooks/useRequests";
+import { StatusBadge } from "@/shared/components/StatusBadge";
 import type { TipoSolicitacao } from "../types";
 
 const TIPO_LABEL: Record<TipoSolicitacao, string> = {
@@ -9,13 +10,6 @@ const TIPO_LABEL: Record<TipoSolicitacao, string> = {
   RevisaoDeNota: "Revisão de nota",
   JustificativaDeFalta: "Justificativa de falta",
   Outro: "Outro",
-};
-
-const STATUS_COLOR: Record<string, string> = {
-  Aberta: "text-[var(--color-warning)]",
-  EmAnalise: "text-[var(--color-primary)]",
-  Aprovada: "text-[var(--color-success)]",
-  Rejeitada: "text-[var(--color-destructive)]",
 };
 
 export function MinhasSolicitacoesPanel() {
@@ -104,7 +98,7 @@ export function MinhasSolicitacoesPanel() {
               <li key={s.id} className="rounded-md border border-[var(--color-border)] p-4">
                 <div className="flex items-start justify-between">
                   <div className="font-medium">{TIPO_LABEL[s.tipo] ?? s.tipo}</div>
-                  <span className={`text-sm font-medium ${STATUS_COLOR[s.status] ?? ""}`}>{s.status}</span>
+                  <StatusBadge status={s.status} />
                 </div>
                 <p className="mt-2 text-sm">{s.descricao}</p>
                 {s.resposta && (

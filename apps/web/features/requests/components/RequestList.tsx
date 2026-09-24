@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useMarcarEmAnalise, useAprovarSolicitacao, useRejeitarSolicitacao } from "../hooks/useRequests";
+import { StatusBadge } from "@/shared/components/StatusBadge";
 import type { Solicitacao } from "../types";
 
 const TIPO_LABEL: Record<string, string> = {
@@ -9,13 +10,6 @@ const TIPO_LABEL: Record<string, string> = {
   RevisaoDeNota: "Revisão de nota",
   JustificativaDeFalta: "Justificativa de falta",
   Outro: "Outro",
-};
-
-const STATUS_COLOR: Record<string, string> = {
-  Aberta: "text-[var(--color-warning)]",
-  EmAnalise: "text-[var(--color-primary)]",
-  Aprovada: "text-[var(--color-success)]",
-  Rejeitada: "text-[var(--color-destructive)]",
 };
 
 export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
@@ -38,7 +32,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
               <div className="font-medium">{TIPO_LABEL[s.tipo] ?? s.tipo}</div>
               <div className="text-sm text-[var(--color-muted-foreground)]">{s.alunoNome}</div>
             </div>
-            <span className={`text-sm font-medium ${STATUS_COLOR[s.status] ?? ""}`}>{s.status}</span>
+            <StatusBadge status={s.status} />
           </div>
 
           <p className="mt-2 text-sm">{s.descricao}</p>
