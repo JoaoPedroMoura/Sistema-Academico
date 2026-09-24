@@ -42,7 +42,7 @@ export function TurmaDetail({ turmaId }: { turmaId: string }) {
         ))}
       </div>
 
-      <div className="rounded-md border border-[var(--color-border)] p-4">
+      <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
         {aba === "Notas" && <GradesPanel turmaId={turmaId} />}
         {aba === "Presença" && <AttendancePanel turmaId={turmaId} />}
         {aba === "Materiais" && <MaterialsPanel turmaId={turmaId} />}

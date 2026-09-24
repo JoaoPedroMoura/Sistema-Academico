@@ -16,7 +16,7 @@ export function TeacherTable({ professores, selecionadoId, onSelecionar, onExclu
   }
 
   return (
-    <div className="overflow-x-auto rounded-md border border-[var(--color-border)]">
+    <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]">
       <table className="w-full text-sm">
         <thead className="bg-[var(--color-muted)] text-left text-xs uppercase text-[var(--color-muted-foreground)]">
           <tr>

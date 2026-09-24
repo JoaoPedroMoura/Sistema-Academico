@@ -20,7 +20,7 @@ export function MinhasPresencasList() {
       {ordenadas.map((p) => (
         <li
           key={p.id}
-          className="flex items-center justify-between rounded-md border border-[var(--color-border)] p-3 text-sm"
+          className="flex items-center justify-between rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-3 text-sm"
         >
           <div>
             <span className="font-medium">{p.materiaNome}</span>

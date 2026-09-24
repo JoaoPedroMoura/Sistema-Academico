@@ -32,7 +32,7 @@ export default function AdminHomePage() {
           <Link
             key={link.href}
             href={link.href}
-            className="rounded-lg border border-[var(--color-border)] p-4 hover:bg-[var(--color-muted)]"
+            className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 hover:bg-[var(--color-muted)]"
           >
             <div className="font-medium">{link.label}</div>
             <div className="mt-1 text-sm text-[var(--color-muted-foreground)]">{link.description}</div>

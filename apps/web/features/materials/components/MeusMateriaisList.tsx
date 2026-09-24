@@ -22,7 +22,7 @@ export function MeusMateriaisList() {
   return (
     <ul className="space-y-3">
       {materiais.map((m) => (
-        <li key={m.id} className="rounded-md border border-[var(--color-border)] p-4">
+        <li key={m.id} className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
           <div className="flex items-start justify-between">
             <div>
               <div className="font-medium">{m.titulo}</div>

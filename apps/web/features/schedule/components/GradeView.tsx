@@ -15,7 +15,7 @@ export function GradeView({ grade }: { grade: Grade }) {
         <span>{grade.turmas.length} aula(s)</span>
       </div>
 
-      <div className="overflow-x-auto rounded-md border border-[var(--color-border)]">
+      <div className="overflow-x-auto rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)]">
         <table className="w-full text-xs">
           <thead className="bg-[var(--color-muted)] text-[var(--color-muted-foreground)]">
             <tr>

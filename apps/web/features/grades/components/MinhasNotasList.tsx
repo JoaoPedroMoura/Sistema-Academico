@@ -29,7 +29,7 @@ export function MinhasNotasList() {
   return (
     <div className="space-y-4">
       {[...porMateria.entries()].map(([materia, notasDaMateria]) => (
-        <div key={materia} className="rounded-md border border-[var(--color-border)] p-4">
+        <div key={materia} className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
           <div className="mb-2 font-medium">{materia}</div>
           <ul className="space-y-1">
             {notasDaMateria.map((n) => (

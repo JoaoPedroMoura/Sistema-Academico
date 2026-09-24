@@ -40,7 +40,7 @@ export default function AlunoHomePage() {
           <Link
             key={a.href}
             href={a.href}
-            className="rounded-lg border border-[var(--color-border)] p-4 hover:bg-[var(--color-muted)]"
+            className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 hover:bg-[var(--color-muted)]"
           >
             <div className="font-medium">{a.titulo}</div>
             <div className="mt-1 text-sm text-[var(--color-muted-foreground)]">{a.descricao}</div>

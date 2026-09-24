@@ -25,7 +25,7 @@ export default function TrocarSenhaPage() {
 
   return (
     <main className="flex flex-1 items-center justify-center p-8">
-      <div className="w-full max-w-sm rounded-lg border border-[var(--color-border)] p-8">
+      <div className="w-full max-w-sm rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-8">
         <TrocarSenhaForm />
       </div>
     </main>

@@ -38,7 +38,7 @@ export default function ProfessorHomePage() {
             <Link
               key={t.id}
               href={`/professor/turmas/${t.id}`}
-              className="rounded-lg border border-[var(--color-border)] p-4 hover:bg-[var(--color-muted)]"
+              className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 hover:bg-[var(--color-muted)]"
             >
               <div className="font-medium">{t.materiaNome}</div>
               <div className="mt-1 text-sm text-[var(--color-muted-foreground)]">

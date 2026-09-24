@@ -26,7 +26,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
   return (
     <ul className="space-y-3">
       {solicitacoes.map((s) => (
-        <li key={s.id} className="rounded-md border border-[var(--color-border)] p-4">
+        <li key={s.id} className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
           <div className="flex items-start justify-between">
             <div>
               <div className="font-medium">{TIPO_LABEL[s.tipo] ?? s.tipo}</div>

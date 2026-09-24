@@ -18,7 +18,7 @@ export function AreaPlaceholder({ title, description }: AreaPlaceholderProps) {
   const { session } = useSession();
 
   return (
-    <div className="rounded-lg border border-[var(--color-border)] p-8">
+    <div className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-8">
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h1 className="font-[family-name:var(--font-display)] text-[32px] leading-[38px] font-semibold">{title}</h1>

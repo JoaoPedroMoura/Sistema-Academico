@@ -48,7 +48,7 @@ export function MinhasSolicitacoesPanel() {
       </div>
 
       {mostrarForm && (
-        <form onSubmit={handleSubmit} className="space-y-3 rounded-md border border-[var(--color-border)] p-4">
+        <form onSubmit={handleSubmit} className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
           <div>
             <label className="mb-1 block text-sm font-medium">Tipo</label>
             <select
@@ -95,7 +95,7 @@ export function MinhasSolicitacoesPanel() {
         ) : (
           <ul className="space-y-3">
             {solicitacoes.map((s) => (
-              <li key={s.id} className="rounded-md border border-[var(--color-border)] p-4">
+              <li key={s.id} className="rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
                 <div className="flex items-start justify-between">
                   <div className="font-medium">{TIPO_LABEL[s.tipo] ?? s.tipo}</div>
                   <StatusBadge status={s.status} />

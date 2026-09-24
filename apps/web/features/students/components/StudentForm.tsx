@@ -27,7 +27,7 @@ export function StudentForm() {
   }
 
   return (
-    <div className="space-y-3 rounded-md border border-[var(--color-border)] p-4">
+    <div className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
       <h2 className="text-sm font-medium">Matricular aluno</h2>
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
