@@ -14,7 +14,7 @@ export default function GradePage() {
       <BackLink href="/admin" label="Área do Admin" />
 
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">Grade de Horário</h1>
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Grade de Horário</h1>
         <div className="flex gap-2">
           {grade && (
             <button

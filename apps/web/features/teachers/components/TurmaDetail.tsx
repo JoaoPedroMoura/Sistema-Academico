@@ -17,7 +17,7 @@ export function TurmaDetail({ turmaId }: { turmaId: string }) {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl font-semibold">{turma?.materiaNome ?? "Turma"}</h1>
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">{turma?.materiaNome ?? "Turma"}</h1>
         {turma && (
           <p className="text-sm text-[var(--color-muted-foreground)]">
             {turma.dia} · {turma.horaInicio}–{turma.horaFim} · {turma.periodoCurricular}º período

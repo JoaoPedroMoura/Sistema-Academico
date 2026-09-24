@@ -11,7 +11,7 @@ export default function AlunosPage() {
   return (
     <div className="space-y-6 p-8">
       <BackLink href="/secretaria" label="Área da Secretaria" />
-      <h1 className="text-xl font-semibold">Alunos</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Alunos</h1>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-4">

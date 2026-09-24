@@ -7,7 +7,7 @@ export default function AlunoNotasPage() {
       <Link href="/aluno" className="text-sm text-[var(--color-primary)] hover:underline">
         ← Área do Aluno
       </Link>
-      <h1 className="text-xl font-semibold">Minhas notas</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Minhas notas</h1>
       <MinhasNotasList />
     </div>
   );

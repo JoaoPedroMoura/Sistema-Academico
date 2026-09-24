@@ -11,7 +11,7 @@ export default function DisponibilidadePage() {
           ← Minhas turmas
         </Link>
       </div>
-      <h1 className="text-xl font-semibold">Minha disponibilidade</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Minha disponibilidade</h1>
       <MyAvailabilityEditor />
     </div>
   );

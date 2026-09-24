@@ -7,7 +7,7 @@ export default function AlunoMateriaisPage() {
       <Link href="/aluno" className="text-sm text-[var(--color-primary)] hover:underline">
         ← Área do Aluno
       </Link>
-      <h1 className="text-xl font-semibold">Materiais complementares</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Materiais complementares</h1>
       <MeusMateriaisList />
     </div>
   );

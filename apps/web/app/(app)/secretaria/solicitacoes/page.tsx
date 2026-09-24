@@ -21,7 +21,7 @@ export default function SolicitacoesPage() {
   return (
     <div className="space-y-6 p-8">
       <BackLink href="/secretaria" label="Área da Secretaria" />
-      <h1 className="text-xl font-semibold">Solicitações</h1>
+      <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Solicitações</h1>
 
       <div className="flex gap-2">
         {FILTROS.map((f) => (

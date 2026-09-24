@@ -49,7 +49,7 @@ export function TrocarSenhaForm() {
   return (
     <div className="w-full max-w-sm space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Troque sua senha</h1>
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Troque sua senha</h1>
         <LogoutButton />
       </div>
       <p className="text-sm text-[var(--color-muted-foreground)]">
