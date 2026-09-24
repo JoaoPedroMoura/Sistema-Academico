@@ -26,7 +26,7 @@ export function StudentTable({ alunos }: { alunos: Aluno[] }) {
           {alunos.map((a) => (
             <tr key={a.id} className="border-t border-[var(--color-border)]">
               <td className="px-3 py-2 font-medium">{a.nome}</td>
-              <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{a.matricula}</td>
+              <td className="px-3 py-2 font-mono tabular-nums text-[var(--color-muted-foreground)]">{a.matricula}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{a.email}</td>
               <td className="px-3 py-2">{a.periodoAtual}º</td>
               <td className="px-3 py-2 text-right">

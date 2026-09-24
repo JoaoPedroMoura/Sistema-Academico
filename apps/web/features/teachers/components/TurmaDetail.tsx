@@ -20,7 +20,7 @@ export function TurmaDetail({ turmaId }: { turmaId: string }) {
         <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">{turma?.materiaNome ?? "Turma"}</h1>
         {turma && (
           <p className="text-sm text-[var(--color-muted-foreground)]">
-            {turma.dia} · {turma.horaInicio}–{turma.horaFim} · {turma.periodoCurricular}º período
+            {turma.dia} · <span className="font-mono tabular-nums">{turma.horaInicio}–{turma.horaFim}</span> · {turma.periodoCurricular}º período
           </p>
         )}
       </div>

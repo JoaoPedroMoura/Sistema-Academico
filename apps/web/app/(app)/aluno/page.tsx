@@ -28,7 +28,7 @@ export default function AlunoHomePage() {
           )}
           {perfil && (
             <p className="mt-1 text-xs text-[var(--color-muted-foreground)]">
-              Matrícula {perfil.matricula} · {perfil.periodoAtual}º período
+              Matrícula <span className="font-mono tabular-nums">{perfil.matricula}</span> · {perfil.periodoAtual}º período
             </p>
           )}
         </div>

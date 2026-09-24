@@ -28,7 +28,7 @@ export function GradeView({ grade }: { grade: Grade }) {
           <tbody>
             {horarios.map((hora) => (
               <tr key={hora} className="border-t border-[var(--color-border)] align-top">
-                <td className="whitespace-nowrap px-2 py-2 font-medium">{hora}</td>
+                <td className="whitespace-nowrap px-2 py-2 font-medium font-mono tabular-nums">{hora}</td>
                 {DIAS.map((dia) => {
                   const turmas = grade.turmas.filter((t) => t.dia === dia && t.horaInicio === hora);
                   return (

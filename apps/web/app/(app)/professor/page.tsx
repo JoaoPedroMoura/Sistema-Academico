@@ -42,7 +42,7 @@ export default function ProfessorHomePage() {
             >
               <div className="font-medium">{t.materiaNome}</div>
               <div className="mt-1 text-sm text-[var(--color-muted-foreground)]">
-                {t.dia} · {t.horaInicio}–{t.horaFim} · {t.periodoCurricular}º período
+                {t.dia} · <span className="font-mono tabular-nums">{t.horaInicio}–{t.horaFim}</span> · {t.periodoCurricular}º período
               </div>
             </Link>
           ))}

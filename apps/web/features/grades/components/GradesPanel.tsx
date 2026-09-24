@@ -33,7 +33,7 @@ export function GradesPanel({ turmaId }: { turmaId: string }) {
               <span>
                 {n.alunoNome} · {n.tipo}
               </span>
-              <strong>{n.valor}</strong>
+              <strong className="font-mono tabular-nums">{n.valor}</strong>
             </li>
           ))}
         </ul>
@@ -53,7 +53,7 @@ export function GradesPanel({ turmaId }: { turmaId: string }) {
             <option value="">Selecione…</option>
             {alunos?.map((a) => (
               <option key={a.id} value={a.id}>
-                {a.nome} ({a.matricula})
+                {a.nome} (<span className="font-mono tabular-nums">{a.matricula}</span>)
               </option>
             ))}
           </select>

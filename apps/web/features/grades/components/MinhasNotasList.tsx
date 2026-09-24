@@ -35,7 +35,7 @@ export function MinhasNotasList() {
             {notasDaMateria.map((n) => (
               <li key={n.id} className="flex items-center justify-between text-sm">
                 <span className="text-[var(--color-muted-foreground)]">{n.tipo}</span>
-                <span className="font-medium">{n.valor.toFixed(1)}</span>
+                <span className="font-medium font-mono tabular-nums">{n.valor.toFixed(1)}</span>
               </li>
             ))}
           </ul>

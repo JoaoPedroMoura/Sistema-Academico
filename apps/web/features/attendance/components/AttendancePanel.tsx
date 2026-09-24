@@ -54,7 +54,7 @@ export function AttendancePanel({ turmaId }: { turmaId: string }) {
           {alunos.map((a) => (
             <li key={a.id} className="flex items-center justify-between rounded-md bg-[var(--color-muted)] px-3 py-1.5 text-sm">
               <span>
-                {a.nome} ({a.matricula})
+                {a.nome} (<span className="font-mono tabular-nums">{a.matricula}</span>)
               </span>
               <label className="flex items-center gap-2">
                 <input

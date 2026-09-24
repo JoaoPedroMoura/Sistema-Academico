@@ -37,7 +37,7 @@ export function TeacherAvailabilityEditor({ professorId }: TeacherAvailabilityEd
           {professor.disponibilidades.map((d) => (
             <li key={d.id} className="flex items-center justify-between rounded-md bg-[var(--color-muted)] px-3 py-1.5">
               <span>
-                {d.dia} · {d.horaInicio} – {d.horaFim}
+                {d.dia} · <span className="font-mono tabular-nums">{d.horaInicio} – {d.horaFim}</span>
               </span>
               <button
                 type="button"
