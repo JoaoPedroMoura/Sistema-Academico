@@ -65,7 +65,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                 type="button"
                 onClick={() => aprovar.mutate({ id: s.id })}
                 disabled={aprovar.isPending}
-                className="rounded-md bg-[var(--color-success)] px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50"
+                className="rounded-md bg-[var(--color-success)] px-3 py-1.5 text-sm font-medium text-[var(--color-success-foreground)] disabled:opacity-50"
               >
                 Aprovar
               </button>
@@ -89,7 +89,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                       );
                     }}
                     disabled={rejeitar.isPending}
-                    className="rounded-md bg-[var(--color-destructive)] px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50"
+                    className="rounded-md bg-[var(--color-destructive)] px-3 py-1.5 text-sm font-medium text-[var(--color-destructive-foreground)] disabled:opacity-50"
                   >
                     Confirmar
                   </button>
