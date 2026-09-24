@@ -51,7 +51,7 @@ export function VinculoManager() {
             required
             value={materiaId}
             onChange={(e) => setMateriaId(e.target.value)}
-            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           >
             <option value="">Selecione…</option>
             {materias?.map((m) => (
@@ -67,7 +67,7 @@ export function VinculoManager() {
             required
             value={professorId}
             onChange={(e) => setProfessorId(e.target.value)}
-            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           >
             <option value="">Selecione…</option>
             {professores?.map((p) => (

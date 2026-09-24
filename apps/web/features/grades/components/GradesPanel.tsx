@@ -48,7 +48,7 @@ export function GradesPanel({ turmaId }: { turmaId: string }) {
             required
             value={alunoId}
             onChange={(e) => setAlunoId(e.target.value)}
-            className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           >
             <option value="">Selecione…</option>
             {alunos?.map((a) => (
@@ -66,7 +66,7 @@ export function GradesPanel({ turmaId }: { turmaId: string }) {
             required
             value={tipo}
             onChange={(e) => setTipo(e.target.value)}
-            className="rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           />
         </div>
         <div className="space-y-1">
@@ -79,7 +79,7 @@ export function GradesPanel({ turmaId }: { turmaId: string }) {
             required
             value={valor}
             onChange={(e) => setValor(Number(e.target.value))}
-            className="w-20 rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="w-20 rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           />
         </div>
         <button

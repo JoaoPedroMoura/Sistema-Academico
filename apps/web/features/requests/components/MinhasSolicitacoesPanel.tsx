@@ -54,7 +54,7 @@ export function MinhasSolicitacoesPanel() {
             <select
               value={tipo}
               onChange={(e) => setTipo(e.target.value as TipoSolicitacao)}
-              className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+              className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
             >
               {Object.entries(TIPO_LABEL).map(([value, label]) => (
                 <option key={value} value={value}>
@@ -71,7 +71,7 @@ export function MinhasSolicitacoesPanel() {
               onChange={(e) => setDescricao(e.target.value)}
               rows={3}
               required
-              className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+              className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
             />
           </div>
 

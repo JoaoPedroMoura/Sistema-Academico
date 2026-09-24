@@ -54,7 +54,7 @@ export function MyAvailabilityEditor() {
           <select
             value={dia}
             onChange={(e) => setDia(e.target.value)}
-            className="rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           >
             {DIAS_SEMANA.map((d) => (
               <option key={d} value={d}>
@@ -69,7 +69,7 @@ export function MyAvailabilityEditor() {
             type="time"
             value={horaInicio}
             onChange={(e) => setHoraInicio(e.target.value)}
-            className="rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           />
         </div>
         <div className="space-y-1">
@@ -78,7 +78,7 @@ export function MyAvailabilityEditor() {
             type="time"
             value={horaFim}
             onChange={(e) => setHoraFim(e.target.value)}
-            className="rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           />
         </div>
         <button

@@ -45,7 +45,7 @@ export function AttendancePanel({ turmaId }: { turmaId: string }) {
           type="date"
           value={data}
           onChange={(e) => handleTrocarData(e.target.value)}
-          className="rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+          className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
       </div>
 

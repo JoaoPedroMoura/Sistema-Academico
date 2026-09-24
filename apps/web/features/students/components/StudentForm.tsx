@@ -36,7 +36,7 @@ export function StudentForm() {
           required
           value={nome}
           onChange={(e) => setNome(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
         <input
           type="email"
@@ -44,7 +44,7 @@ export function StudentForm() {
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
         <div className="flex gap-3">
           <input
@@ -53,7 +53,7 @@ export function StudentForm() {
             required
             value={matricula}
             onChange={(e) => setMatricula(e.target.value)}
-            className="flex-1 rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+            className="flex-1 rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           />
           <input
             type="number"
@@ -62,7 +62,7 @@ export function StudentForm() {
             required
             value={periodoAtual}
             onChange={(e) => setPeriodoAtual(Number(e.target.value))}
-            className="w-24 rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+            className="w-24 rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
           />
         </div>
         {matricular.isError && <p className="text-sm text-[var(--color-destructive)]">{matricular.error.message}</p>}

@@ -71,7 +71,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                     placeholder="Motivo da rejeição"
                     value={motivoRejeicao}
                     onChange={(e) => setMotivoRejeicao(e.target.value)}
-                    className="flex-1 rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-2 py-1.5 text-sm"
+                    className="flex-1 rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
                   />
                   <button
                     type="button"

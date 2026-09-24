@@ -58,14 +58,14 @@ export function MaterialsPanel({ turmaId }: { turmaId: string }) {
           required
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
         <input
           type="text"
           placeholder="Descrição (opcional)"
           value={descricao}
           onChange={(e) => setDescricao(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
         <input
           type="url"
@@ -73,7 +73,7 @@ export function MaterialsPanel({ turmaId }: { turmaId: string }) {
           required
           value={arquivoUrl}
           onChange={(e) => setArquivoUrl(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
         <input
           type="text"
@@ -81,7 +81,7 @@ export function MaterialsPanel({ turmaId }: { turmaId: string }) {
           required
           value={arquivoNomeOriginal}
           onChange={(e) => setArquivoNomeOriginal(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm outline-none focus:border-[var(--color-primary)]"
+          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
         />
         {enviar.isError && <p className="text-sm text-[var(--color-destructive)]">{enviar.error.message}</p>}
         <button
