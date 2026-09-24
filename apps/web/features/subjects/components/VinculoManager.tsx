@@ -35,7 +35,7 @@ export function VinculoManager() {
                 type="button"
                 onClick={() => remover.mutate({ materiaId: v.materiaId, professorId: v.professorId })}
                 disabled={remover.isPending}
-                className="text-[var(--color-destructive)] hover:underline disabled:opacity-50"
+                className="text-[var(--color-destructive)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
               >
                 Remover
               </button>
@@ -80,7 +80,7 @@ export function VinculoManager() {
         <button
           type="submit"
           disabled={adicionar.isPending}
-          className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+          className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
         >
           Vincular
         </button>

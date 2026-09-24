@@ -42,7 +42,7 @@ export function LoginForm() {
               type="button"
               onClick={() => handleEscolherTenant(option.slug)}
               disabled={login.isPending}
-              className="w-full rounded-md border border-[var(--color-border)] px-4 py-3 text-left text-sm hover:bg-[var(--color-muted)] disabled:opacity-50"
+              className="w-full rounded-md border border-[var(--color-border)] px-4 py-3 text-left text-sm hover:bg-[var(--color-muted)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
             >
               <div className="font-medium">{option.nome}</div>
               <div className="text-[var(--color-muted-foreground)]">{option.role}</div>
@@ -86,7 +86,7 @@ export function LoginForm() {
       <button
         type="submit"
         disabled={login.isPending}
-        className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+        className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
       >
         {login.isPending ? "Entrando…" : "Entrar"}
       </button>

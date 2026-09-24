@@ -75,7 +75,7 @@ export function AttendancePanel({ turmaId }: { turmaId: string }) {
         type="button"
         onClick={handleSalvar}
         disabled={registrar.isPending || !alunos?.length}
-        className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+        className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
       >
         {registrar.isPending ? "Salvando…" : "Salvar presença"}
       </button>

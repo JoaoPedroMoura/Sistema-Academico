@@ -85,7 +85,7 @@ export function GradesPanel({ turmaId }: { turmaId: string }) {
         <button
           type="submit"
           disabled={lancar.isPending}
-          className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+          className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
         >
           Lançar
         </button>

@@ -35,7 +35,7 @@ export function SubjectTable({ materias, onExcluir, excluindo }: SubjectTablePro
                   type="button"
                   onClick={() => onExcluir(m.id)}
                   disabled={excluindo}
-                  className="text-[var(--color-destructive)] hover:underline disabled:opacity-50"
+                  className="text-[var(--color-destructive)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                 >
                   Excluir
                 </button>

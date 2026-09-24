@@ -103,7 +103,7 @@ export function TrocarSenhaForm() {
         <button
           type="submit"
           disabled={trocarSenha.isPending}
-          className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+          className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
         >
           {trocarSenha.isPending ? "Salvando…" : "Trocar senha"}
         </button>

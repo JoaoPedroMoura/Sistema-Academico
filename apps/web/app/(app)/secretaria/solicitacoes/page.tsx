@@ -29,7 +29,7 @@ export default function SolicitacoesPage() {
             key={f.label}
             type="button"
             onClick={() => setFiltro(f.value)}
-            className={`rounded-md border px-3 py-1.5 text-sm ${
+            className={`rounded-md border px-3 py-1.5 text-sm focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none ${
               filtro === f.value
                 ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-[var(--color-primary-foreground)]"
                 : "border-[var(--color-border)] hover:bg-[var(--color-muted)]"

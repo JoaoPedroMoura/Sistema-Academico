@@ -69,7 +69,7 @@ export function StudentForm() {
         <button
           type="submit"
           disabled={matricular.isPending}
-          className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+          className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
         >
           {matricular.isPending ? "Salvando…" : "Matricular"}
         </button>

@@ -35,7 +35,7 @@ export function StudentTable({ alunos }: { alunos: Aluno[] }) {
                     type="button"
                     onClick={() => avancar.mutate({ id: a.id, novoPeriodo: a.periodoAtual + 1 })}
                     disabled={avancar.isPending}
-                    className="text-[var(--color-primary)] hover:underline disabled:opacity-50"
+                    className="text-[var(--color-primary)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                   >
                     Avançar período
                   </button>

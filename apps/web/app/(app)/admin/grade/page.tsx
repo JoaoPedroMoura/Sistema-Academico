@@ -25,7 +25,7 @@ export default function GradePage() {
                 }
               }}
               disabled={excluir.isPending}
-              className="rounded-md border border-[var(--color-destructive)] px-4 py-2 text-sm font-medium text-[var(--color-destructive)] hover:bg-[var(--color-muted)] disabled:opacity-50"
+              className="rounded-md border border-[var(--color-destructive)] px-4 py-2 text-sm font-medium text-[var(--color-destructive)] hover:bg-[var(--color-muted)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
             >
               {excluir.isPending ? "Excluindo…" : "Excluir grade"}
             </button>
@@ -34,7 +34,7 @@ export default function GradePage() {
             type="button"
             onClick={() => gerar.mutate()}
             disabled={gerar.isPending}
-            className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+            className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
           >
             {gerar.isPending ? "Gerando…" : "Gerar nova grade"}
           </button>

@@ -50,7 +50,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                   type="button"
                   onClick={() => marcarEmAnalise.mutate(s.id)}
                   disabled={marcarEmAnalise.isPending}
-                  className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-sm hover:bg-[var(--color-muted)] disabled:opacity-50"
+                  className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-sm hover:bg-[var(--color-muted)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                 >
                   Marcar em análise
                 </button>
@@ -59,7 +59,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                 type="button"
                 onClick={() => aprovar.mutate({ id: s.id })}
                 disabled={aprovar.isPending}
-                className="rounded-md bg-[var(--color-success)] px-3 py-1.5 text-sm font-medium text-[var(--color-success-foreground)] disabled:opacity-50"
+                className="rounded-md bg-[var(--color-success)] px-3 py-1.5 text-sm font-medium text-[var(--color-success-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
               >
                 Aprovar
               </button>
@@ -83,7 +83,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                       );
                     }}
                     disabled={rejeitar.isPending}
-                    className="rounded-md bg-[var(--color-destructive)] px-3 py-1.5 text-sm font-medium text-[var(--color-destructive-foreground)] disabled:opacity-50"
+                    className="rounded-md bg-[var(--color-destructive)] px-3 py-1.5 text-sm font-medium text-[var(--color-destructive-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                   >
                     Confirmar
                   </button>
@@ -92,7 +92,7 @@ export function RequestList({ solicitacoes }: { solicitacoes: Solicitacao[] }) {
                 <button
                   type="button"
                   onClick={() => setRejeitandoId(s.id)}
-                  className="rounded-md border border-[var(--color-destructive)] px-3 py-1.5 text-sm text-[var(--color-destructive)] hover:bg-[var(--color-muted)]"
+                  className="rounded-md border border-[var(--color-destructive)] px-3 py-1.5 text-sm text-[var(--color-destructive)] hover:bg-[var(--color-muted)] focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                 >
                   Rejeitar
                 </button>

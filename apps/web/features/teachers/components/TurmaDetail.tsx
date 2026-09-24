@@ -31,7 +31,7 @@ export function TurmaDetail({ turmaId }: { turmaId: string }) {
             key={a}
             type="button"
             onClick={() => setAba(a)}
-            className={`px-3 py-2 text-sm ${
+            className={`px-3 py-2 text-sm focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none ${
               aba === a
                 ? "border-b-2 border-[var(--color-primary)] font-medium text-[var(--color-primary)]"
                 : "text-[var(--color-muted-foreground)]"

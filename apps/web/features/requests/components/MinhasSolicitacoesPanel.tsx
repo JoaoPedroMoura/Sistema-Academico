@@ -41,7 +41,7 @@ export function MinhasSolicitacoesPanel() {
         <button
           type="button"
           onClick={() => setMostrarForm((v) => !v)}
-          className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-sm hover:bg-[var(--color-muted)]"
+          className="rounded-md border border-[var(--color-border)] px-3 py-1.5 text-sm hover:bg-[var(--color-muted)] focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
         >
           {mostrarForm ? "Cancelar" : "Abrir solicitação"}
         </button>
@@ -78,7 +78,7 @@ export function MinhasSolicitacoesPanel() {
           <button
             type="submit"
             disabled={abrir.isPending}
-            className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50"
+            className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
           >
             Enviar
           </button>
