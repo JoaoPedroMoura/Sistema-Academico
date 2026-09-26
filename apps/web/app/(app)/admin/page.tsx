@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "@/lib/auth/SessionProvider";
-import { LogoutButton } from "@/shared/components/LogoutButton";
 
 const LINKS = [
   { href: "/admin/professores", label: "Professores", description: "Cadastro e disponibilidade" },
@@ -11,20 +9,12 @@ const LINKS = [
 ];
 
 export default function AdminHomePage() {
-  const { session } = useSession();
-
   return (
     <div className="p-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-[family-name:var(--font-display)] text-[32px] leading-[38px] font-semibold">Área do Admin</h1>
-          {session && (
-            <p className="mt-1 text-xs text-[var(--color-muted-foreground)]">
-              {session.name} · {session.tenantName} · {session.role}
-            </p>
-          )}
         </div>
-        <LogoutButton />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">

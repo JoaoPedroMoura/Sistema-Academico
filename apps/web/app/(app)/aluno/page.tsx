@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "@/lib/auth/SessionProvider";
-import { LogoutButton } from "@/shared/components/LogoutButton";
 import { useMeuPerfilAluno } from "@/features/students/hooks/useStudents";
 
 const AREAS = [
@@ -13,7 +11,6 @@ const AREAS = [
 ];
 
 export default function AlunoHomePage() {
-  const { session } = useSession();
   const { data: perfil } = useMeuPerfilAluno();
 
   return (
@@ -21,18 +18,12 @@ export default function AlunoHomePage() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-[family-name:var(--font-display)] text-[32px] leading-[38px] font-semibold">Área do Aluno</h1>
-          {session && (
-            <p className="mt-1 text-xs text-[var(--color-muted-foreground)]">
-              {session.name} · {session.tenantName} · {session.role}
-            </p>
-          )}
           {perfil && (
             <p className="mt-1 text-xs text-[var(--color-muted-foreground)]">
               Matrícula <span className="font-mono tabular-nums">{perfil.matricula}</span> · {perfil.periodoAtual}º período
             </p>
           )}
         </div>
-        <LogoutButton />
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

@@ -1,6 +1,18 @@
 @import "tailwindcss";
 @import "../shared/styles/tokens.css";
 
+/* dark: segue o data-theme escolhido; sem escolha, segue o sistema (igual a tokens.css). */
+@custom-variant dark {
+  &:where([data-theme="dark"], [data-theme="dark"] *) {
+    @slot;
+  }
+  @media (prefers-color-scheme: dark) {
+    &:where(:root:not([data-theme="light"]) *) {
+      @slot;
+    }
+  }
+}
+
 /* Mapeia os tokens (fonte da verdade) para o namespace de tema do Tailwind v4.
    Trocar shared/styles/tokens.css é suficiente para re-estilizar a aplicação —
    nada aqui deveria precisar mudar quando os tokens do Claude Design chegarem. */

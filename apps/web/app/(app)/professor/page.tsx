@@ -1,12 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useSession } from "@/lib/auth/SessionProvider";
-import { LogoutButton } from "@/shared/components/LogoutButton";
 import { useMinhasTurmas } from "@/features/teachers/hooks/useTeachers";
 
 export default function ProfessorHomePage() {
-  const { session } = useSession();
   const { data: turmas, isLoading } = useMinhasTurmas();
 
   return (
@@ -14,13 +11,7 @@ export default function ProfessorHomePage() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="font-[family-name:var(--font-display)] text-[32px] leading-[38px] font-semibold">Área do Professor</h1>
-          {session && (
-            <p className="mt-1 text-xs text-[var(--color-muted-foreground)]">
-              {session.name} · {session.tenantName} · {session.role}
-            </p>
-          )}
         </div>
-        <LogoutButton />
       </div>
 
       <div className="mb-4 flex items-center justify-between">
