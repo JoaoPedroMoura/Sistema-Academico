@@ -34,7 +34,7 @@ public class Professor : AuditableEntity
         AccountId = accountId;
         Nome = nome.Trim();
         Email = email.Trim().ToLowerInvariant();
-        Telefone = telefone;
+        Telefone = ValidarTelefone(telefone);
     }
 
     /// <summary>Email não entra aqui: é o login da Account e nunca é editável.</summary>
@@ -46,8 +46,25 @@ public class Professor : AuditableEntity
         }
 
         Nome = nome.Trim();
-        Telefone = telefone;
+        Telefone = ValidarTelefone(telefone);
         Touch();
+    }
+
+    /// <summary>Opcional; se informado, precisa ter 10 ou 11 dígitos (DDD + número, fixo ou celular).</summary>
+    private static string? ValidarTelefone(string? telefone)
+    {
+        if (string.IsNullOrWhiteSpace(telefone))
+        {
+            return null;
+        }
+
+        var digitos = telefone.Count(char.IsAsciiDigit);
+        if (digitos is < 10 or > 11 || telefone.Length > 20)
+        {
+            throw new DomainException("Telefone deve ter DDD + número (10 ou 11 dígitos).");
+        }
+
+        return telefone.Trim();
     }
 
     public void Desativar() { Ativo = false; Touch(); }

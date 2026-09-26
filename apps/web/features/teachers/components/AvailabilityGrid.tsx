@@ -64,6 +64,7 @@ export function AvailabilityGrid({ disponibilidades, onAdicionar, onRemover, pen
                   {horaInicio}–{horaFim}
                 </td>
                 {DIAS_SEMANA.map((dia) => {
+                  if (dia === "Sabado" && horaInicio >= "18:00") return <td key={dia} />; // sem aula sábado à noite
                   const disp = cobrindo(dia, horaInicio, horaFim);
                   return (
                     <td key={dia} className="p-0.5">

@@ -7,6 +7,14 @@ import { useAtualizarProfessor, useCriarProfessor } from "../hooks/useTeachers";
 import type { Professor } from "../types";
 import { TeacherAvailabilityEditor } from "./TeacherAvailabilityEditor";
 
+/** Máscara BR: (99) 9999-9999 ou (99) 99999-9999, conforme a quantidade de dígitos. */
+function formatarTelefone(valor: string) {
+  const d = valor.replace(/\D/g, "").slice(0, 11);
+  if (d.length <= 2) return d.length ? `(${d}` : "";
+  const meio = d.length === 11 ? 7 : 6;
+  return `(${d.slice(0, 2)}) ${d.slice(2, meio)}${d.length > meio ? `-${d.slice(meio)}` : ""}`;
+}
+
 interface TeacherFormProps {
   /** Professor em edição; null = criação. Montar só quando o modal deve abrir. */
   professor: Professor | null;
@@ -57,10 +65,13 @@ export function TeacherForm({ professor, onClose }: TeacherFormProps) {
               <p className="-mt-1 text-xs text-[var(--color-destructive)]">Já existe uma conta com este email.</p>
             )}
             <input
-              type="text"
+              type="tel"
+              inputMode="numeric"
               placeholder="Telefone (opcional)"
               value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
+              onChange={(e) => setTelefone(formatarTelefone(e.target.value))}
+              pattern="\(\d{2}\) \d{4,5}-\d{4}"
+              title="(99) 99999-9999"
               className={inputClass}
             />
             {mutation.isError && <p className="text-sm text-[var(--color-destructive)]">{mutation.error.message}</p>}
