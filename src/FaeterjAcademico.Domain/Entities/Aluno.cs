@@ -44,15 +44,25 @@ public class Aluno : AuditableEntity
         PeriodoAtual = periodoAtual;
     }
 
-    public void AvancarPeriodo(int novoPeriodo)
+    /// <summary>Email e matrícula não entram aqui: são identificadores fixos do aluno.</summary>
+    public void AtualizarDados(string nome, int periodoAtual)
     {
-        if (novoPeriodo <= 0)
+        if (string.IsNullOrWhiteSpace(nome))
         {
-            throw new DomainException("Novo período deve ser maior que zero.");
+            throw new DomainException("Nome do aluno é obrigatório.");
         }
-        PeriodoAtual = novoPeriodo;
+        if (periodoAtual <= 0)
+        {
+            throw new DomainException("Período atual do aluno deve ser maior que zero.");
+        }
+
+        Nome = nome.Trim();
+        PeriodoAtual = periodoAtual;
         Touch();
     }
+
+    /// <summary>Prefixo da matrícula: ano + semestre (1 até 30/06, 2 a partir de 01/07). Ex.: 20261.</summary>
+    public static string PrefixoMatricula(DateOnly data) => $"{data.Year}{(data.Month <= 6 ? 1 : 2)}";
 
     public void Desativar() { Ativo = false; Touch(); }
     public void Ativar() { Ativo = true; Touch(); }

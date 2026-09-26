@@ -1,10 +1,10 @@
 "use client";
 
-import { useAvancarPeriodo } from "../hooks/useStudents";
+import { useAtualizarAluno } from "../hooks/useStudents";
 import type { Aluno } from "../types";
 
-export function StudentTable({ alunos }: { alunos: Aluno[] }) {
-  const avancar = useAvancarPeriodo();
+export function StudentTable({ alunos, onEditar }: { alunos: Aluno[]; onEditar: (aluno: Aluno) => void }) {
+  const avancar = useAtualizarAluno();
 
   if (alunos.length === 0) {
     return <p className="text-sm text-[var(--color-muted-foreground)]">Nenhum aluno matriculado.</p>;
@@ -29,11 +29,18 @@ export function StudentTable({ alunos }: { alunos: Aluno[] }) {
               <td className="px-3 py-2 font-mono tabular-nums text-[var(--color-muted-foreground)]">{a.matricula}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{a.email}</td>
               <td className="px-3 py-2">{a.periodoAtual}º</td>
-              <td className="px-3 py-2 text-right">
+              <td className="space-x-3 whitespace-nowrap px-3 py-2 text-right">
+                <button
+                  type="button"
+                  onClick={() => onEditar(a)}
+                  className="text-[var(--color-primary)] hover:underline focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
+                >
+                  Editar
+                </button>
                 {a.periodoAtual < 5 && (
                   <button
                     type="button"
-                    onClick={() => avancar.mutate({ id: a.id, novoPeriodo: a.periodoAtual + 1 })}
+                    onClick={() => avancar.mutate({ id: a.id, nome: a.nome, periodoAtual: a.periodoAtual + 1 })}
                     disabled={avancar.isPending}
                     className="text-[var(--color-primary)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                   >

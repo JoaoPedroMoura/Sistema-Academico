@@ -13,7 +13,7 @@ public sealed class AtualizarProfessorHandler(
         var professor = await repository.GetProfessorByIdAsync(request.Id, cancellationToken)
             ?? throw new UseCaseException("Professor não encontrado.");
 
-        professor.AtualizarDados(request.Nome, request.Email, request.Telefone);
+        professor.AtualizarDados(request.Nome, request.Telefone);
 
         await repository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Professor.Editar", "Professor", professor.Id, sucesso: true),

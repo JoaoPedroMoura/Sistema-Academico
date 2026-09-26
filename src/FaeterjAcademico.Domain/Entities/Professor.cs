@@ -37,19 +37,15 @@ public class Professor : AuditableEntity
         Telefone = telefone;
     }
 
-    public void AtualizarDados(string nome, string email, string? telefone)
+    /// <summary>Email não entra aqui: é o login da Account e nunca é editável.</summary>
+    public void AtualizarDados(string nome, string? telefone)
     {
         if (string.IsNullOrWhiteSpace(nome))
         {
             throw new DomainException("Nome do professor é obrigatório.");
         }
-        if (string.IsNullOrWhiteSpace(email))
-        {
-            throw new DomainException("Email do professor é obrigatório.");
-        }
 
         Nome = nome.Trim();
-        Email = email.Trim().ToLowerInvariant();
         Telefone = telefone;
         Touch();
     }

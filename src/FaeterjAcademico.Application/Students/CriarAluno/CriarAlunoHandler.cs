@@ -26,10 +26,8 @@ public sealed class CriarAlunoHandler(
         {
             throw new UseCaseException("Já existe uma conta cadastrada com este email.");
         }
-        if (await academicoRepository.GetAlunoByMatriculaAsync(request.Matricula, cancellationToken) is not null)
-        {
-            throw new UseCaseException("Já existe um aluno cadastrado com esta matrícula.");
-        }
+
+        var matricula = await GerarMatriculaAsync(cancellationToken);
 
         var senhaTemporaria = TemporaryPasswordGenerator.Gerar();
         var account = new Account(request.Nome, emailNormalizado, passwordHasher.Hash(senhaTemporaria), senhaTemporaria: true);
@@ -38,7 +36,7 @@ public sealed class CriarAlunoHandler(
             new AccountTenantRole(account.Id, currentTenant.TenantId, Role.Aluno), cancellationToken);
         await identityRepository.SaveChangesAsync(cancellationToken);
 
-        var aluno = new Aluno(account.Id, request.Nome, emailNormalizado, request.Matricula, request.PeriodoAtual);
+        var aluno = new Aluno(account.Id, request.Nome, emailNormalizado, matricula, request.PeriodoAtual);
         await academicoRepository.AddAlunoAsync(aluno, cancellationToken);
         await academicoRepository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Aluno.Matricular", "Aluno", aluno.Id, sucesso: true),
@@ -46,5 +44,25 @@ public sealed class CriarAlunoHandler(
         await academicoRepository.SaveChangesAsync(cancellationToken);
 
         return new AlunoMatriculadoDto(AlunoDto.FromEntity(aluno), senhaTemporaria);
+    }
+
+    private static readonly TimeZoneInfo FusoBrasilia = TimeZoneInfo.FindSystemTimeZoneById("America/Sao_Paulo");
+
+    /// <summary>Prefixo do semestre (ver <see cref="Aluno.PrefixoMatricula"/>) + 5 dígitos aleatórios, sem repetir.</summary>
+    private async Task<string> GerarMatriculaAsync(CancellationToken cancellationToken)
+    {
+        var hoje = DateOnly.FromDateTime(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, FusoBrasilia));
+        var prefixo = Aluno.PrefixoMatricula(hoje);
+
+        // ponytail: sorteio com retry; 100k números por semestre, colisão só pesa perto de dezenas de milhares de alunos.
+        for (var tentativa = 0; tentativa < 20; tentativa++)
+        {
+            var matricula = $"{prefixo}{Random.Shared.Next(0, 100_000):D5}";
+            if (await academicoRepository.GetAlunoByMatriculaAsync(matricula, cancellationToken) is null)
+            {
+                return matricula;
+            }
+        }
+        throw new UseCaseException("Não foi possível gerar uma matrícula livre. Tente novamente.");
     }
 }

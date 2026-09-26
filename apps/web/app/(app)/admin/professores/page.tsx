@@ -6,6 +6,7 @@ import { TeacherTable } from "@/features/teachers/components/TeacherTable";
 import { TeacherForm } from "@/features/teachers/components/TeacherForm";
 import { TeacherAvailabilityEditor } from "@/features/teachers/components/TeacherAvailabilityEditor";
 import { BackLink } from "@/shared/components/BackLink";
+import { primaryButtonClass } from "@/shared/components/FormDialog";
 import type { Professor } from "@/features/teachers/types";
 
 export default function ProfessoresPage() {
@@ -20,11 +21,7 @@ export default function ProfessoresPage() {
       <BackLink href="/admin" label="Área do Admin" />
       <div className="flex items-center justify-between">
         <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Professores</h1>
-        <button
-          type="button"
-          onClick={() => setEmEdicao(null)}
-          className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
-        >
+        <button type="button" onClick={() => setEmEdicao(null)} className={primaryButtonClass}>
           Adicionar professor
         </button>
       </div>

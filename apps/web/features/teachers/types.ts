@@ -27,7 +27,6 @@ export interface CriarProfessorInput {
 
 export interface AtualizarProfessorInput {
   nome: string;
-  email: string;
   telefone?: string | null;
 }
 

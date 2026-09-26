@@ -10,7 +10,11 @@ export interface Aluno {
 export interface MatricularAlunoInput {
   nome: string;
   email: string;
-  matricula: string;
+  periodoAtual: number;
+}
+
+export interface AtualizarAlunoInput {
+  nome: string;
   periodoAtual: number;
 }
 

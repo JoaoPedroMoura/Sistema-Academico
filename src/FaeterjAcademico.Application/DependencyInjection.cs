@@ -20,6 +20,7 @@ using FaeterjAcademico.Application.Schedule.ExcluirGrade;
 using FaeterjAcademico.Application.Schedule.GerarGrade;
 using FaeterjAcademico.Application.Schedule.ListarGrades;
 using FaeterjAcademico.Application.Schedule.ObterGradeAtiva;
+using FaeterjAcademico.Application.Cadastro.VerificarDisponibilidade;
 using FaeterjAcademico.Application.Students.AtualizarAluno;
 using FaeterjAcademico.Application.Students.CriarAluno;
 using FaeterjAcademico.Application.Students.ListarAlunos;
@@ -52,6 +53,8 @@ public static class DependencyInjection
         .AddScoped<RefreshTokenHandler>()
         .AddScoped<LogoutHandler>()
         .AddScoped<TrocarSenhaHandler>()
+        // Cadastro
+        .AddScoped<VerificarDisponibilidadeHandler>()
         // Teachers
         .AddScoped<CriarProfessorHandler>()
         .AddScoped<AtualizarProfessorHandler>()

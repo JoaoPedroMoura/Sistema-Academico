@@ -3,7 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "@/lib/auth/SessionProvider";
 import { studentsApi } from "../api/studentsApi";
-import type { MatricularAlunoInput } from "../types";
+import type { AtualizarAlunoInput, MatricularAlunoInput } from "../types";
 
 const ALUNOS_KEY = ["alunos"];
 
@@ -30,12 +30,11 @@ export function useMatricularAluno() {
   });
 }
 
-export function useAvancarPeriodo() {
+export function useAtualizarAluno() {
   const auth = useAuth();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ id, novoPeriodo }: { id: string; novoPeriodo: number }) =>
-      studentsApi.avancarPeriodo(auth, id, novoPeriodo),
+    mutationFn: ({ id, ...input }: AtualizarAlunoInput & { id: string }) => studentsApi.atualizar(auth, id, input),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ALUNOS_KEY }),
   });
 }

@@ -99,7 +99,7 @@ public class ProfessoresController(
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProfessorDto>> Atualizar(Guid id, AtualizarProfessorRequest request, CancellationToken cancellationToken) =>
         Ok(await atualizarHandler.HandleAsync(
-            new AtualizarProfessorCommand(id, request.Nome, request.Email, request.Telefone), cancellationToken));
+            new AtualizarProfessorCommand(id, request.Nome, request.Telefone), cancellationToken));
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Admin")]

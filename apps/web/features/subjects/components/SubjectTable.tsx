@@ -4,11 +4,12 @@ import type { Materia } from "../types";
 
 interface SubjectTableProps {
   materias: Materia[];
+  onEditar: (materia: Materia) => void;
   onExcluir: (id: string) => void;
   excluindo: boolean;
 }
 
-export function SubjectTable({ materias, onExcluir, excluindo }: SubjectTableProps) {
+export function SubjectTable({ materias, onEditar, onExcluir, excluindo }: SubjectTableProps) {
   if (materias.length === 0) {
     return <p className="text-sm text-[var(--color-muted-foreground)]">Nenhuma matéria cadastrada.</p>;
   }
@@ -30,7 +31,14 @@ export function SubjectTable({ materias, onExcluir, excluindo }: SubjectTablePro
               <td className="px-3 py-2 font-medium">{m.nome}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{m.periodo}º</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{m.cargaHorariaSemanal} aulas</td>
-              <td className="px-3 py-2 text-right">
+              <td className="space-x-3 whitespace-nowrap px-3 py-2 text-right">
+                <button
+                  type="button"
+                  onClick={() => onEditar(m)}
+                  className="text-[var(--color-primary)] hover:underline focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
+                >
+                  Editar
+                </button>
                 <button
                   type="button"
                   onClick={() => onExcluir(m.id)}

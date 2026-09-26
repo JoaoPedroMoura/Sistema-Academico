@@ -4,7 +4,7 @@ using FaeterjAcademico.Domain.Entities;
 
 namespace FaeterjAcademico.Application.Students.AtualizarAluno;
 
-/// <summary>Avança o aluno de período (só isso é mutável hoje — nome/email exigiriam também atualizar a Account).</summary>
+/// <summary>Edita nome e período (email e matrícula são identificadores fixos).</summary>
 public sealed class AtualizarAlunoHandler(
     IAcademicoRepository repository,
     ICurrentUserAccessor currentUser) : IRequestHandler<AtualizarAlunoCommand, AlunoDto>
@@ -14,10 +14,10 @@ public sealed class AtualizarAlunoHandler(
         var aluno = await repository.GetAlunoByIdAsync(request.Id, cancellationToken)
             ?? throw new UseCaseException("Aluno não encontrado.");
 
-        aluno.AvancarPeriodo(request.NovoPeriodo);
+        aluno.AtualizarDados(request.Nome, request.PeriodoAtual);
 
         await repository.AddLogAsync(
-            new LogSistema(currentUser.AccountId, "Aluno.AvancarPeriodo", "Aluno", aluno.Id, sucesso: true),
+            new LogSistema(currentUser.AccountId, "Aluno.Editar", "Aluno", aluno.Id, sucesso: true),
             cancellationToken);
         await repository.SaveChangesAsync(cancellationToken);
 

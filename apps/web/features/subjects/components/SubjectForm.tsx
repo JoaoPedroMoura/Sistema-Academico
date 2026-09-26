@@ -1,37 +1,36 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { useCriarMateria } from "../hooks/useSubjects";
+import { FormDialog, inputClass, primaryButtonClass } from "@/shared/components/FormDialog";
+import { useAtualizarMateria, useCriarMateria } from "../hooks/useSubjects";
+import type { Materia } from "../types";
 
-export function SubjectForm() {
-  const [nome, setNome] = useState("");
-  const [periodo, setPeriodo] = useState(1);
-  const [cargaHorariaSemanal, setCargaHorariaSemanal] = useState(4);
+interface SubjectFormProps {
+  /** Matéria em edição; null = criação. Montar só quando o modal deve abrir. */
+  materia: Materia | null;
+  onClose: () => void;
+}
+
+export function SubjectForm({ materia, onClose }: SubjectFormProps) {
+  const [nome, setNome] = useState(materia?.nome ?? "");
+  const [periodo, setPeriodo] = useState(materia?.periodo ?? 1);
+  const [cargaHorariaSemanal, setCargaHorariaSemanal] = useState(materia?.cargaHorariaSemanal ?? 4);
   const criar = useCriarMateria();
+  const atualizar = useAtualizarMateria(materia?.id ?? "");
+  const mutation = materia ? atualizar : criar;
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    criar.mutate(
-      { nome, periodo, cargaHorariaSemanal },
-      { onSuccess: () => setNome("") },
-    );
+    mutation.mutate({ nome, periodo, cargaHorariaSemanal }, { onSuccess: onClose });
   }
 
   return (
-    <div className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-      <h2 className="text-sm font-medium">Adicionar matéria</h2>
+    <FormDialog title={materia ? "Editar matéria" : "Adicionar matéria"} onClose={onClose}>
       <form onSubmit={handleSubmit} className="space-y-3">
-        <input
-          type="text"
-          placeholder="Nome"
-          required
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
-        />
+        <input type="text" placeholder="Nome" required value={nome} onChange={(e) => setNome(e.target.value)} className={inputClass} />
         <div className="flex gap-3">
-          <div className="flex-1 space-y-1">
-            <label className="text-xs text-[var(--color-muted-foreground)]">Período</label>
+          <label className="flex-1 space-y-1">
+            <span className="text-xs text-[var(--color-muted-foreground)]">Período</span>
             <input
               type="number"
               min={1}
@@ -39,11 +38,11 @@ export function SubjectForm() {
               required
               value={periodo}
               onChange={(e) => setPeriodo(Number(e.target.value))}
-              className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
+              className={inputClass}
             />
-          </div>
-          <div className="flex-1 space-y-1">
-            <label className="text-xs text-[var(--color-muted-foreground)]">Aulas/semana</label>
+          </label>
+          <label className="flex-1 space-y-1">
+            <span className="text-xs text-[var(--color-muted-foreground)]">Aulas/semana</span>
             <input
               type="number"
               min={1}
@@ -51,19 +50,15 @@ export function SubjectForm() {
               required
               value={cargaHorariaSemanal}
               onChange={(e) => setCargaHorariaSemanal(Number(e.target.value))}
-              className="w-full rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-3 py-2 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
+              className={inputClass}
             />
-          </div>
+          </label>
         </div>
-        {criar.isError && <p className="text-sm text-[var(--color-destructive)]">{criar.error.message}</p>}
-        <button
-          type="submit"
-          disabled={criar.isPending}
-          className="w-full rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
-        >
-          {criar.isPending ? "Salvando…" : "Adicionar"}
+        {mutation.isError && <p className="text-sm text-[var(--color-destructive)]">{mutation.error.message}</p>}
+        <button type="submit" disabled={mutation.isPending} className={`w-full ${primaryButtonClass}`}>
+          {mutation.isPending ? "Salvando…" : materia ? "Salvar" : "Adicionar"}
         </button>
       </form>
-    </div>
+    </FormDialog>
   );
 }
