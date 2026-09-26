@@ -6,11 +6,12 @@ interface TeacherTableProps {
   professores: Professor[];
   selecionadoId: string | null;
   onSelecionar: (id: string) => void;
+  onEditar: (professor: Professor) => void;
   onExcluir: (id: string) => void;
   excluindo: boolean;
 }
 
-export function TeacherTable({ professores, selecionadoId, onSelecionar, onExcluir, excluindo }: TeacherTableProps) {
+export function TeacherTable({ professores, selecionadoId, onSelecionar, onEditar, onExcluir, excluindo }: TeacherTableProps) {
   if (professores.length === 0) {
     return <p className="text-sm text-[var(--color-muted-foreground)]">Nenhum professor cadastrado.</p>;
   }
@@ -38,7 +39,17 @@ export function TeacherTable({ professores, selecionadoId, onSelecionar, onExclu
               <td className="px-3 py-2 font-medium">{p.nome}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{p.email}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{p.disponibilidades.length}</td>
-              <td className="px-3 py-2 text-right">
+              <td className="space-x-3 whitespace-nowrap px-3 py-2 text-right">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEditar(p);
+                  }}
+                  className="text-[var(--color-primary)] hover:underline focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
+                >
+                  Editar
+                </button>
                 <button
                   type="button"
                   onClick={(e) => {

@@ -6,19 +6,31 @@ import { TeacherTable } from "@/features/teachers/components/TeacherTable";
 import { TeacherForm } from "@/features/teachers/components/TeacherForm";
 import { TeacherAvailabilityEditor } from "@/features/teachers/components/TeacherAvailabilityEditor";
 import { BackLink } from "@/shared/components/BackLink";
+import type { Professor } from "@/features/teachers/types";
 
 export default function ProfessoresPage() {
   const [selecionadoId, setSelecionadoId] = useState<string | null>(null);
   const { data: professores, isLoading } = useProfessores();
   const excluir = useExcluirProfessor();
+  // undefined = modal fechado; null = criando; Professor = editando
+  const [emEdicao, setEmEdicao] = useState<Professor | null | undefined>(undefined);
 
   return (
     <div className="space-y-6 p-8">
       <BackLink href="/admin" label="Área do Admin" />
       <div className="flex items-center justify-between">
         <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Professores</h1>
-        <TeacherForm />
+        <button
+          type="button"
+          onClick={() => setEmEdicao(null)}
+          className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
+        >
+          Adicionar professor
+        </button>
       </div>
+      {emEdicao !== undefined && (
+        <TeacherForm key={emEdicao?.id ?? "novo"} professor={emEdicao} onClose={() => setEmEdicao(undefined)} />
+      )}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-4">
@@ -29,6 +41,7 @@ export default function ProfessoresPage() {
               professores={professores ?? []}
               selecionadoId={selecionadoId}
               onSelecionar={setSelecionadoId}
+              onEditar={setEmEdicao}
               onExcluir={(id) => {
                 excluir.mutate(id, {
                   onSuccess: () => {
