@@ -16,6 +16,15 @@ public class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
         builder.Property(a => a.Email).HasMaxLength(200).IsRequired();
         builder.Property(a => a.Matricula).HasMaxLength(50).IsRequired();
 
+        builder.ComplexProperty(a => a.DadosPessoais, DadosPessoaisMapping.Configure);
+        builder.ComplexProperty(a => a.Documentos, d =>
+        {
+            d.Property(x => x.EnsinoMedioInstituicao).HasColumnName("EnsinoMedioInstituicao").HasMaxLength(200);
+            d.Property(x => x.EnsinoMedioAnoConclusao).HasColumnName("EnsinoMedioAnoConclusao");
+            d.Property(x => x.TituloEleitor).HasColumnName("TituloEleitor").HasMaxLength(20);
+            d.Property(x => x.CertificadoReservista).HasColumnName("CertificadoReservista").HasMaxLength(30);
+        });
+
         builder.HasIndex(a => a.Email).IsUnique();
         builder.HasIndex(a => a.Matricula).IsUnique();
         builder.HasIndex(a => a.AccountId).IsUnique();

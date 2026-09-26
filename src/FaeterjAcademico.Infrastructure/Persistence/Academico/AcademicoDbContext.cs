@@ -26,6 +26,7 @@ public class AcademicoDbContext(DbContextOptions<AcademicoDbContext> options) : 
     public DbSet<Presenca> Presencas => Set<Presenca>();
     public DbSet<Solicitacao> Solicitacoes => Set<Solicitacao>();
     public DbSet<MaterialComplementar> MateriaisComplementares => Set<MaterialComplementar>();
+    public DbSet<DocumentoAnexo> DocumentosAnexos => Set<DocumentoAnexo>();
     public DbSet<LogSistema> LogsSistema => Set<LogSistema>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

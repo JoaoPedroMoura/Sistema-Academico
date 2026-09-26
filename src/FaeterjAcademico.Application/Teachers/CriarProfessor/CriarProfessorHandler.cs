@@ -1,5 +1,6 @@
 using FaeterjAcademico.Application.Common;
 using FaeterjAcademico.Application.Teachers.Dtos;
+using FaeterjAcademico.Domain.Common;
 using FaeterjAcademico.Domain.Entities;
 using FaeterjAcademico.Domain.Identity;
 
@@ -33,6 +34,16 @@ public sealed class CriarProfessorHandler(
             throw new UseCaseException("Já existe uma conta cadastrada com este email.");
         }
 
+        // Valida documentos antes de criar a conta, para não sobrar conta órfã por CPF inválido/duplicado.
+        var dadosPessoais = (request.DadosPessoais ?? DadosPessoais.Vazio).Normalizar();
+        var formacao = (request.Formacao ?? FormacaoProfessor.Vazio).Normalizar();
+        if (dadosPessoais.Cpf is { } cpf && await academicoRepository.GetProfessorByCpfAsync(cpf, cancellationToken) is not null)
+        {
+            throw new UseCaseException("Já existe um professor com este CPF.");
+        }
+
+        var matricula = await GeradorMatricula.GerarAsync(academicoRepository, cancellationToken);
+
         var senhaTemporaria = TemporaryPasswordGenerator.Gerar();
         var account = new Account(request.Nome, emailNormalizado, passwordHasher.Hash(senhaTemporaria), senhaTemporaria: true);
         await identityRepository.AddAccountAsync(account, cancellationToken);
@@ -40,7 +51,8 @@ public sealed class CriarProfessorHandler(
             new AccountTenantRole(account.Id, currentTenant.TenantId, Role.Professor), cancellationToken);
         await identityRepository.SaveChangesAsync(cancellationToken);
 
-        var professor = new Professor(account.Id, request.Nome, emailNormalizado, request.Telefone);
+        var professor = new Professor(account.Id, request.Nome, emailNormalizado, matricula, request.Telefone);
+        professor.AtualizarDocumentos(dadosPessoais, formacao);
         await academicoRepository.AddProfessorAsync(professor, cancellationToken);
         await academicoRepository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Professor.Adicionar", "Professor", professor.Id, sucesso: true),

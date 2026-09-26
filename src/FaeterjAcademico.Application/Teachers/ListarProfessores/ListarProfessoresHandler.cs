@@ -15,7 +15,8 @@ public sealed class ListarProfessoresHandler(IAcademicoRepository repository)
             var termo = request.Pesquisa.Trim();
             professores = [.. professores.Where(p =>
                 p.Nome.Contains(termo, StringComparison.OrdinalIgnoreCase) ||
-                p.Email.Contains(termo, StringComparison.OrdinalIgnoreCase))];
+                p.Email.Contains(termo, StringComparison.OrdinalIgnoreCase) ||
+                p.Matricula.Contains(termo, StringComparison.OrdinalIgnoreCase))];
         }
 
         return [.. professores.Select(ProfessorDto.FromEntity)];

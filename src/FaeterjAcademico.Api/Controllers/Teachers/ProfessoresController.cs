@@ -90,7 +90,7 @@ public class ProfessoresController(
     public async Task<ActionResult<ProfessorCriadoDto>> Criar(CriarProfessorRequest request, CancellationToken cancellationToken)
     {
         var resultado = await criarHandler.HandleAsync(
-            new CriarProfessorCommand(request.Nome, request.Email, request.Telefone), cancellationToken);
+            new CriarProfessorCommand(request.Nome, request.Email, request.Telefone, request.DadosPessoais, request.Formacao), cancellationToken);
 
         return CreatedAtAction(nameof(Obter), new { id = resultado.Professor.Id }, resultado);
     }
@@ -99,7 +99,7 @@ public class ProfessoresController(
     [Authorize(Roles = "Admin")]
     public async Task<ActionResult<ProfessorDto>> Atualizar(Guid id, AtualizarProfessorRequest request, CancellationToken cancellationToken) =>
         Ok(await atualizarHandler.HandleAsync(
-            new AtualizarProfessorCommand(id, request.Nome, request.Telefone), cancellationToken));
+            new AtualizarProfessorCommand(id, request.Nome, request.Telefone, request.DadosPessoais, request.Formacao), cancellationToken));
 
     [HttpDelete("{id:guid}")]
     [Authorize(Roles = "Admin")]

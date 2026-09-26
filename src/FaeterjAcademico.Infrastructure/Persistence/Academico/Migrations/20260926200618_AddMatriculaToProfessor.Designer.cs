@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FaeterjAcademico.Infrastructure.Persistence.Academico;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FaeterjAcademico.Infrastructure.Persistence.Academico.Migrations
 {
     [DbContext(typeof(AcademicoDbContext))]
-    partial class AcademicoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260926200618_AddMatriculaToProfessor")]
+    partial class AddMatriculaToProfessor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,113 +60,6 @@ namespace FaeterjAcademico.Infrastructure.Persistence.Academico.Migrations
 
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
-
-                    b.ComplexProperty(typeof(Dictionary<string, object>), "DadosPessoais", "FaeterjAcademico.Domain.Entities.Aluno.DadosPessoais#DadosPessoais", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Bairro")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Bairro");
-
-                            b1.Property<string>("Cep")
-                                .HasMaxLength(8)
-                                .HasColumnType("character varying(8)")
-                                .HasColumnName("Cep");
-
-                            b1.Property<string>("Cidade")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Cidade");
-
-                            b1.Property<string>("Complemento")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Complemento");
-
-                            b1.Property<string>("Cpf")
-                                .HasMaxLength(11)
-                                .HasColumnType("character varying(11)")
-                                .HasColumnName("Cpf");
-
-                            b1.Property<DateOnly?>("DataNascimento")
-                                .HasColumnType("date")
-                                .HasColumnName("DataNascimento");
-
-                            b1.Property<string>("Logradouro")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("Logradouro");
-
-                            b1.Property<string>("Naturalidade")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Naturalidade");
-
-                            b1.Property<string>("NomeMae")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("NomeMae");
-
-                            b1.Property<string>("NomePai")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("NomePai");
-
-                            b1.Property<string>("Numero")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("Numero");
-
-                            b1.Property<DateOnly?>("RgDataEmissao")
-                                .HasColumnType("date")
-                                .HasColumnName("RgDataEmissao");
-
-                            b1.Property<string>("RgNumero")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("RgNumero");
-
-                            b1.Property<string>("RgOrgaoEmissor")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("RgOrgaoEmissor");
-
-                            b1.Property<string>("RgUf")
-                                .HasMaxLength(2)
-                                .HasColumnType("character varying(2)")
-                                .HasColumnName("RgUf");
-
-                            b1.Property<string>("Uf")
-                                .HasMaxLength(2)
-                                .HasColumnType("character varying(2)")
-                                .HasColumnName("Uf");
-                        });
-
-                    b.ComplexProperty(typeof(Dictionary<string, object>), "Documentos", "FaeterjAcademico.Domain.Entities.Aluno.Documentos#DocumentosAluno", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("CertificadoReservista")
-                                .HasMaxLength(30)
-                                .HasColumnType("character varying(30)")
-                                .HasColumnName("CertificadoReservista");
-
-                            b1.Property<int?>("EnsinoMedioAnoConclusao")
-                                .HasColumnType("integer")
-                                .HasColumnName("EnsinoMedioAnoConclusao");
-
-                            b1.Property<string>("EnsinoMedioInstituicao")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("EnsinoMedioInstituicao");
-
-                            b1.Property<string>("TituloEleitor")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("TituloEleitor");
-                        });
 
                     b.HasKey("Id");
 
@@ -209,49 +105,6 @@ namespace FaeterjAcademico.Infrastructure.Persistence.Academico.Migrations
                     b.HasIndex("ProfessorId");
 
                     b.ToTable("Disponibilidades", (string)null);
-                });
-
-            modelBuilder.Entity("FaeterjAcademico.Domain.Entities.DocumentoAnexo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ContentType")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<byte[]>("Conteudo")
-                        .IsRequired()
-                        .HasColumnType("bytea");
-
-                    b.Property<DateTime>("CreatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("NomeArquivo")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<Guid>("PessoaId")
-                        .HasColumnType("uuid");
-
-                    b.Property<long>("TamanhoBytes")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)");
-
-                    b.Property<DateTime?>("UpdatedAtUtc")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PessoaId");
-
-                    b.ToTable("DocumentosAnexos", (string)null);
                 });
 
             modelBuilder.Entity("FaeterjAcademico.Domain.Entities.Grade", b =>
@@ -580,104 +433,6 @@ namespace FaeterjAcademico.Infrastructure.Persistence.Academico.Migrations
 
                     b.Property<DateTime?>("UpdatedAtUtc")
                         .HasColumnType("timestamp with time zone");
-
-                    b.ComplexProperty(typeof(Dictionary<string, object>), "DadosPessoais", "FaeterjAcademico.Domain.Entities.Professor.DadosPessoais#DadosPessoais", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("Bairro")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Bairro");
-
-                            b1.Property<string>("Cep")
-                                .HasMaxLength(8)
-                                .HasColumnType("character varying(8)")
-                                .HasColumnName("Cep");
-
-                            b1.Property<string>("Cidade")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Cidade");
-
-                            b1.Property<string>("Complemento")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Complemento");
-
-                            b1.Property<string>("Cpf")
-                                .HasMaxLength(11)
-                                .HasColumnType("character varying(11)")
-                                .HasColumnName("Cpf");
-
-                            b1.Property<DateOnly?>("DataNascimento")
-                                .HasColumnType("date")
-                                .HasColumnName("DataNascimento");
-
-                            b1.Property<string>("Logradouro")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("Logradouro");
-
-                            b1.Property<string>("Naturalidade")
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)")
-                                .HasColumnName("Naturalidade");
-
-                            b1.Property<string>("NomeMae")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("NomeMae");
-
-                            b1.Property<string>("NomePai")
-                                .HasMaxLength(200)
-                                .HasColumnType("character varying(200)")
-                                .HasColumnName("NomePai");
-
-                            b1.Property<string>("Numero")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("Numero");
-
-                            b1.Property<DateOnly?>("RgDataEmissao")
-                                .HasColumnType("date")
-                                .HasColumnName("RgDataEmissao");
-
-                            b1.Property<string>("RgNumero")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("RgNumero");
-
-                            b1.Property<string>("RgOrgaoEmissor")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("RgOrgaoEmissor");
-
-                            b1.Property<string>("RgUf")
-                                .HasMaxLength(2)
-                                .HasColumnType("character varying(2)")
-                                .HasColumnName("RgUf");
-
-                            b1.Property<string>("Uf")
-                                .HasMaxLength(2)
-                                .HasColumnType("character varying(2)")
-                                .HasColumnName("Uf");
-                        });
-
-                    b.ComplexProperty(typeof(Dictionary<string, object>), "Formacao", "FaeterjAcademico.Domain.Entities.Professor.Formacao#FormacaoProfessor", b1 =>
-                        {
-                            b1.IsRequired();
-
-                            b1.Property<string>("LattesUrl")
-                                .HasMaxLength(300)
-                                .HasColumnType("character varying(300)")
-                                .HasColumnName("LattesUrl");
-
-                            b1.Property<string>("Titulacao")
-                                .HasMaxLength(20)
-                                .HasColumnType("character varying(20)")
-                                .HasColumnName("Titulacao");
-                        });
 
                     b.HasKey("Id");
 

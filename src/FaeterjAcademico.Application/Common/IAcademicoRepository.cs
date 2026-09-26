@@ -1,3 +1,4 @@
+using FaeterjAcademico.Application.Documents;
 using FaeterjAcademico.Domain.Entities;
 
 namespace FaeterjAcademico.Application.Common;
@@ -14,6 +15,7 @@ public interface IAcademicoRepository
     Task<IReadOnlyList<Professor>> GetProfessoresAsync(CancellationToken cancellationToken);
     Task<Professor?> GetProfessorByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<Professor?> GetProfessorByEmailAsync(string email, CancellationToken cancellationToken);
+    Task<Professor?> GetProfessorByCpfAsync(string cpf, CancellationToken cancellationToken);
     Task AddProfessorAsync(Professor professor, CancellationToken cancellationToken);
     void RemoveProfessor(Professor professor);
     Task<bool> ProfessorTemVinculoComMateriaAsync(Guid professorId, CancellationToken cancellationToken);
@@ -60,12 +62,15 @@ public interface IAcademicoRepository
     /// <summary>Turmas da grade ativa cujo período curricular é o de um aluno — "minhas turmas" do Aluno.</summary>
     Task<IReadOnlyList<Turma>> GetTurmasByPeriodoAsync(int periodoCurricular, CancellationToken cancellationToken);
 
+    /// <summary>Matrícula já usada por algum aluno ou professor da unidade.</summary>
+    Task<bool> MatriculaEmUsoAsync(string matricula, CancellationToken cancellationToken);
+
     // Alunos
     Task<IReadOnlyList<Aluno>> GetAlunosAsync(CancellationToken cancellationToken);
     Task<Aluno?> GetAlunoByIdAsync(Guid id, CancellationToken cancellationToken);
     Task<Aluno?> GetAlunoByAccountIdAsync(Guid accountId, CancellationToken cancellationToken);
     Task<Aluno?> GetAlunoByEmailAsync(string email, CancellationToken cancellationToken);
-    Task<Aluno?> GetAlunoByMatriculaAsync(string matricula, CancellationToken cancellationToken);
+    Task<Aluno?> GetAlunoByCpfAsync(string cpf, CancellationToken cancellationToken);
     Task AddAlunoAsync(Aluno aluno, CancellationToken cancellationToken);
 
     /// <summary>
@@ -96,6 +101,14 @@ public interface IAcademicoRepository
     // Materiais complementares
     Task<IReadOnlyList<MaterialComplementar>> GetMateriaisByTurmaAsync(Guid turmaId, CancellationToken cancellationToken);
     Task AddMaterialComplementarAsync(MaterialComplementar material, CancellationToken cancellationToken);
+
+    // Documentos anexos (de aluno ou professor)
+    Task<IReadOnlyList<DocumentoAnexoDto>> ListarDocumentosAnexosAsync(Guid pessoaId, CancellationToken cancellationToken);
+    Task<DocumentoAnexo?> GetDocumentoAnexoByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task AddDocumentoAnexoAsync(DocumentoAnexo documento, CancellationToken cancellationToken);
+    void RemoveDocumentoAnexo(DocumentoAnexo documento);
+    /// <summary>Apaga direto no banco (sem esperar o SaveChanges).</summary>
+    Task RemoveDocumentosAnexosDaPessoaAsync(Guid pessoaId, CancellationToken cancellationToken);
 
     // Auditoria
     Task AddLogAsync(LogSistema log, CancellationToken cancellationToken);

@@ -14,6 +14,13 @@ public sealed class AtualizarProfessorHandler(
             ?? throw new UseCaseException("Professor não encontrado.");
 
         professor.AtualizarDados(request.Nome, request.Telefone);
+        // Campo ausente = mantém o que já está salvo.
+        professor.AtualizarDocumentos(request.DadosPessoais ?? professor.DadosPessoais, request.Formacao ?? professor.Formacao);
+        if (professor.DadosPessoais.Cpf is { } cpf
+            && await repository.GetProfessorByCpfAsync(cpf, cancellationToken) is { } outro && outro.Id != professor.Id)
+        {
+            throw new UseCaseException("Já existe um professor com este CPF.");
+        }
 
         await repository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Professor.Editar", "Professor", professor.Id, sucesso: true),

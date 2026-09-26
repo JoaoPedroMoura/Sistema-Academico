@@ -15,6 +15,8 @@ public class Aluno : AuditableEntity
     public string Matricula { get; private set; } = string.Empty;
     public int PeriodoAtual { get; private set; }
     public bool Ativo { get; private set; } = true;
+    public DadosPessoais DadosPessoais { get; private set; } = DadosPessoais.Vazio;
+    public DocumentosAluno Documentos { get; private set; } = DocumentosAluno.Vazio;
 
     private Aluno() { } // EF Core
 
@@ -63,6 +65,13 @@ public class Aluno : AuditableEntity
 
     /// <summary>Prefixo da matrícula: ano + semestre (1 até 30/06, 2 a partir de 01/07). Ex.: 20261.</summary>
     public static string PrefixoMatricula(DateOnly data) => $"{data.Year}{(data.Month <= 6 ? 1 : 2)}";
+
+    public void AtualizarDocumentos(DadosPessoais dadosPessoais, DocumentosAluno documentos)
+    {
+        DadosPessoais = dadosPessoais.Normalizar();
+        Documentos = documentos.Normalizar();
+        Touch();
+    }
 
     public void Desativar() { Ativo = false; Touch(); }
     public void Ativar() { Ativo = true; Touch(); }

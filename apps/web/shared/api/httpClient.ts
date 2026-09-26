@@ -22,13 +22,12 @@ export interface HttpClientOptions {
   tenantSlug?: string | null;
 }
 
-async function request<TResponse>(
-  path: string,
-  init: RequestInit,
-  options: HttpClientOptions = {},
-): Promise<TResponse> {
+async function send(path: string, init: RequestInit, options: HttpClientOptions): Promise<Response> {
   const headers = new Headers(init.headers);
-  headers.set("Content-Type", "application/json");
+  // FormData (upload) define o próprio Content-Type com o boundary.
+  if (!(init.body instanceof FormData)) {
+    headers.set("Content-Type", "application/json");
+  }
 
   if (options.accessToken) {
     headers.set("Authorization", `Bearer ${options.accessToken}`);
@@ -47,6 +46,15 @@ async function request<TResponse>(
     const body = await response.json().catch(() => undefined);
     throw new ApiError(response.status, body?.message ?? response.statusText, body);
   }
+  return response;
+}
+
+async function request<TResponse>(
+  path: string,
+  init: RequestInit,
+  options: HttpClientOptions = {},
+): Promise<TResponse> {
+  const response = await send(path, init, options);
 
   if (response.status === 204) {
     return undefined as TResponse;
@@ -66,4 +74,8 @@ export const httpClient = {
     request<T>(path, { method: "PATCH", body: body ? JSON.stringify(body) : undefined }, options),
   delete: <T>(path: string, options?: HttpClientOptions) =>
     request<T>(path, { method: "DELETE" }, options),
+  upload: <T>(path: string, form: FormData, options?: HttpClientOptions) =>
+    request<T>(path, { method: "POST", body: form }, options),
+  blob: async (path: string, options?: HttpClientOptions) =>
+    (await send(path, { method: "GET" }, options ?? {})).blob(),
 };

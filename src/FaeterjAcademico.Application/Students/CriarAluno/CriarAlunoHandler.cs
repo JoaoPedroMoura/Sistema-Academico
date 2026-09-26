@@ -1,5 +1,6 @@
 using FaeterjAcademico.Application.Common;
 using FaeterjAcademico.Application.Students.Dtos;
+using FaeterjAcademico.Domain.Common;
 using FaeterjAcademico.Domain.Entities;
 using FaeterjAcademico.Domain.Identity;
 
@@ -27,7 +28,15 @@ public sealed class CriarAlunoHandler(
             throw new UseCaseException("Já existe uma conta cadastrada com este email.");
         }
 
-        var matricula = await GerarMatriculaAsync(cancellationToken);
+        // Valida documentos antes de criar a conta, para não sobrar conta órfã por CPF inválido/duplicado.
+        var dadosPessoais = (request.DadosPessoais ?? DadosPessoais.Vazio).Normalizar();
+        var documentos = (request.Documentos ?? DocumentosAluno.Vazio).Normalizar();
+        if (dadosPessoais.Cpf is { } cpf && await academicoRepository.GetAlunoByCpfAsync(cpf, cancellationToken) is not null)
+        {
+            throw new UseCaseException("Já existe um aluno com este CPF.");
+        }
+
+        var matricula = await GeradorMatricula.GerarAsync(academicoRepository, cancellationToken);
 
         var senhaTemporaria = TemporaryPasswordGenerator.Gerar();
         var account = new Account(request.Nome, emailNormalizado, passwordHasher.Hash(senhaTemporaria), senhaTemporaria: true);
@@ -37,6 +46,7 @@ public sealed class CriarAlunoHandler(
         await identityRepository.SaveChangesAsync(cancellationToken);
 
         var aluno = new Aluno(account.Id, request.Nome, emailNormalizado, matricula, request.PeriodoAtual);
+        aluno.AtualizarDocumentos(dadosPessoais, documentos);
         await academicoRepository.AddAlunoAsync(aluno, cancellationToken);
         await academicoRepository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Aluno.Matricular", "Aluno", aluno.Id, sucesso: true),
@@ -44,25 +54,5 @@ public sealed class CriarAlunoHandler(
         await academicoRepository.SaveChangesAsync(cancellationToken);
 
         return new AlunoMatriculadoDto(AlunoDto.FromEntity(aluno), senhaTemporaria);
-    }
-
-    private static readonly TimeZoneInfo FusoBrasilia = TimeZoneInfo.FindSystemTimeZoneById("America/Sao_Paulo");
-
-    /// <summary>Prefixo do semestre (ver <see cref="Aluno.PrefixoMatricula"/>) + 5 dígitos aleatórios, sem repetir.</summary>
-    private async Task<string> GerarMatriculaAsync(CancellationToken cancellationToken)
-    {
-        var hoje = DateOnly.FromDateTime(TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, FusoBrasilia));
-        var prefixo = Aluno.PrefixoMatricula(hoje);
-
-        // ponytail: sorteio com retry; 100k números por semestre, colisão só pesa perto de dezenas de milhares de alunos.
-        for (var tentativa = 0; tentativa < 20; tentativa++)
-        {
-            var matricula = $"{prefixo}{Random.Shared.Next(0, 100_000):D5}";
-            if (await academicoRepository.GetAlunoByMatriculaAsync(matricula, cancellationToken) is null)
-            {
-                return matricula;
-            }
-        }
-        throw new UseCaseException("Não foi possível gerar uma matrícula livre. Tente novamente.");
     }
 }

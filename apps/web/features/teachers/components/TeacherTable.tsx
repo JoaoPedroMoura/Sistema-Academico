@@ -20,6 +20,7 @@ export function TeacherTable({ professores, onEditar, onExcluir, excluindo }: Te
         <thead className="bg-[var(--color-muted)] text-left text-xs uppercase text-[var(--color-muted-foreground)]">
           <tr>
             <th className="px-3 py-2">Nome</th>
+            <th className="px-3 py-2">Matrícula</th>
             <th className="px-3 py-2">Email</th>
             <th className="px-3 py-2">Disponibilidades</th>
             <th className="px-3 py-2" />
@@ -29,6 +30,7 @@ export function TeacherTable({ professores, onEditar, onExcluir, excluindo }: Te
           {professores.map((p) => (
             <tr key={p.id} className="border-t border-[var(--color-border)]">
               <td className="px-3 py-2 font-medium">{p.nome}</td>
+              <td className="px-3 py-2 font-mono tabular-nums text-[var(--color-muted-foreground)]">{p.matricula}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{p.email}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{p.disponibilidades.length}</td>
               <td className="space-x-3 whitespace-nowrap px-3 py-2 text-right">

@@ -14,7 +14,16 @@ public class ProfessorConfiguration : IEntityTypeConfiguration<Professor>
 
         builder.Property(p => p.Nome).HasMaxLength(200).IsRequired();
         builder.Property(p => p.Email).HasMaxLength(200).IsRequired();
+        builder.ComplexProperty(p => p.DadosPessoais, DadosPessoaisMapping.Configure);
+        builder.ComplexProperty(p => p.Formacao, f =>
+        {
+            f.Property(x => x.Titulacao).HasColumnName("Titulacao").HasConversion<string>().HasMaxLength(20);
+            f.Property(x => x.LattesUrl).HasColumnName("LattesUrl").HasMaxLength(300);
+        });
+
         builder.HasIndex(p => p.Email).IsUnique();
+        builder.Property(p => p.Matricula).HasMaxLength(50).IsRequired();
+        builder.HasIndex(p => p.Matricula).IsUnique();
         builder.HasIndex(p => p.AccountId).IsUnique();
 
         builder

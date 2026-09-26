@@ -41,6 +41,7 @@ using FaeterjAcademico.Application.Teachers.ListarMinhasTurmas;
 using FaeterjAcademico.Application.Teachers.ListarProfessores;
 using FaeterjAcademico.Application.Teachers.ObterMeuPerfil;
 using FaeterjAcademico.Application.Teachers.ObterProfessor;
+using FaeterjAcademico.Application.Documents;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace FaeterjAcademico.Application;
@@ -85,6 +86,11 @@ public static class DependencyInjection
         .AddScoped<AtualizarAlunoHandler>()
         .AddScoped<ListarAlunosHandler>()
         .AddScoped<ObterMeuPerfilAlunoHandler>()
+        // Documents
+        .AddScoped<ListarDocumentosAnexosHandler>()
+        .AddScoped<EnviarDocumentoAnexoHandler>()
+        .AddScoped<ObterDocumentoAnexoHandler>()
+        .AddScoped<RemoverDocumentoAnexoHandler>()
         // Requests
         .AddScoped<AbrirSolicitacaoHandler>()
         .AddScoped<ListarSolicitacoesHandler>()

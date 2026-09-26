@@ -1,3 +1,5 @@
+import type { DadosPessoais, FormacaoProfessor } from "@/features/documents/types";
+
 export interface Disponibilidade {
   id: string;
   dia: string;
@@ -9,9 +11,12 @@ export interface Professor {
   id: string;
   nome: string;
   email: string;
+  matricula: string;
   telefone: string | null;
   ativo: boolean;
   disponibilidades: Disponibilidade[];
+  dadosPessoais: DadosPessoais;
+  formacao: FormacaoProfessor;
 }
 
 export interface ProfessorCriado {
@@ -23,11 +28,15 @@ export interface CriarProfessorInput {
   nome: string;
   email: string;
   telefone?: string | null;
+  dadosPessoais: DadosPessoais;
+  formacao: FormacaoProfessor;
 }
 
 export interface AtualizarProfessorInput {
   nome: string;
   telefone?: string | null;
+  dadosPessoais: DadosPessoais;
+  formacao: FormacaoProfessor;
 }
 
 export interface AdicionarDisponibilidadeInput {

@@ -40,7 +40,7 @@ export function StudentTable({ alunos, onEditar }: { alunos: Aluno[]; onEditar: 
                 {a.periodoAtual < 5 && (
                   <button
                     type="button"
-                    onClick={() => avancar.mutate({ id: a.id, nome: a.nome, periodoAtual: a.periodoAtual + 1 })}
+                    onClick={() => avancar.mutate({ ...a, periodoAtual: a.periodoAtual + 1 })}
                     disabled={avancar.isPending}
                     className="text-[var(--color-primary)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                   >

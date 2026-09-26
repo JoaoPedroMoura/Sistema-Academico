@@ -4,7 +4,7 @@ using FaeterjAcademico.Domain.Entities;
 
 namespace FaeterjAcademico.Application.Students.AtualizarAluno;
 
-/// <summary>Edita nome e período (email e matrícula são identificadores fixos).</summary>
+/// <summary>Edita nome, período e documentos (email e matrícula são identificadores fixos).</summary>
 public sealed class AtualizarAlunoHandler(
     IAcademicoRepository repository,
     ICurrentUserAccessor currentUser) : IRequestHandler<AtualizarAlunoCommand, AlunoDto>
@@ -15,6 +15,13 @@ public sealed class AtualizarAlunoHandler(
             ?? throw new UseCaseException("Aluno não encontrado.");
 
         aluno.AtualizarDados(request.Nome, request.PeriodoAtual);
+        // Campo ausente = mantém o que já está salvo.
+        aluno.AtualizarDocumentos(request.DadosPessoais ?? aluno.DadosPessoais, request.Documentos ?? aluno.Documentos);
+        if (aluno.DadosPessoais.Cpf is { } cpf
+            && await repository.GetAlunoByCpfAsync(cpf, cancellationToken) is { } outro && outro.Id != aluno.Id)
+        {
+            throw new UseCaseException("Já existe um aluno com este CPF.");
+        }
 
         await repository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Aluno.Editar", "Aluno", aluno.Id, sucesso: true),

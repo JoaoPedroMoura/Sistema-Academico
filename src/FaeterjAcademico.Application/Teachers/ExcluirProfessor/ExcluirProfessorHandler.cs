@@ -35,6 +35,7 @@ public sealed class ExcluirProfessorHandler(
                 "Gere uma nova grade sem ele antes de excluir.");
         }
 
+        await repository.RemoveDocumentosAnexosDaPessoaAsync(professor.Id, cancellationToken);
         repository.RemoveProfessor(professor);
         await repository.AddLogAsync(
             new LogSistema(currentUser.AccountId, "Professor.Excluir", "Professor", professor.Id, sucesso: true),

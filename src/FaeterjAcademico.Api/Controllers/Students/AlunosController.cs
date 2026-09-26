@@ -37,7 +37,7 @@ public class AlunosController(
     public async Task<ActionResult<AlunoMatriculadoDto>> Matricular(CriarAlunoRequest request, CancellationToken cancellationToken)
     {
         var resultado = await criarHandler.HandleAsync(
-            new CriarAlunoCommand(request.Nome, request.Email, request.PeriodoAtual), cancellationToken);
+            new CriarAlunoCommand(request.Nome, request.Email, request.PeriodoAtual, request.DadosPessoais, request.Documentos), cancellationToken);
 
         return CreatedAtAction(nameof(Listar), resultado);
     }
@@ -45,5 +45,5 @@ public class AlunosController(
     [HttpPut("{id:guid}")]
     [Authorize(Roles = "Admin,Secretaria")]
     public async Task<ActionResult<AlunoDto>> Atualizar(Guid id, AtualizarAlunoRequest request, CancellationToken cancellationToken) =>
-        Ok(await atualizarHandler.HandleAsync(new AtualizarAlunoCommand(id, request.Nome, request.PeriodoAtual), cancellationToken));
+        Ok(await atualizarHandler.HandleAsync(new AtualizarAlunoCommand(id, request.Nome, request.PeriodoAtual, request.DadosPessoais, request.Documentos), cancellationToken));
 }

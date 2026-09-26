@@ -6,7 +6,7 @@ namespace FaeterjAcademico.Domain.Tests.Entities;
 public class ProfessorTests
 {
     private static Professor CriarProfessor() =>
-        new(Guid.NewGuid(), "João Pedro", "joao@faeterj.edu.br");
+        new(Guid.NewGuid(), "João Pedro", "joao@faeterj.edu.br", "2026200001");
 
     [Fact]
     public void AdicionarDisponibilidade_SemColisao_Adiciona()
@@ -33,6 +33,6 @@ public class ProfessorTests
     [Fact]
     public void Construtor_SemNome_LancaExcecao()
     {
-        Assert.Throws<DomainException>(() => new Professor(Guid.NewGuid(), "", "joao@faeterj.edu.br"));
+        Assert.Throws<DomainException>(() => new Professor(Guid.NewGuid(), "", "joao@faeterj.edu.br", "2026200001"));
     }
 }

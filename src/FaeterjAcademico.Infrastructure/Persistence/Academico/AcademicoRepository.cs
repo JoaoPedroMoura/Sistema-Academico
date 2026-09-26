@@ -1,4 +1,5 @@
 using FaeterjAcademico.Application.Common;
+using FaeterjAcademico.Application.Documents;
 using FaeterjAcademico.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,9 @@ public sealed class AcademicoRepository(AcademicoDbContext db) : IAcademicoRepos
 
     public Task<Professor?> GetProfessorByIdAsync(Guid id, CancellationToken cancellationToken) =>
         db.Professores.Include(p => p.Disponibilidades).SingleOrDefaultAsync(p => p.Id == id, cancellationToken);
+
+    public Task<Professor?> GetProfessorByCpfAsync(string cpf, CancellationToken cancellationToken) =>
+        db.Professores.FirstOrDefaultAsync(p => p.DadosPessoais.Cpf == cpf, cancellationToken);
 
     public Task<Professor?> GetProfessorByEmailAsync(string email, CancellationToken cancellationToken) =>
         db.Professores.SingleOrDefaultAsync(p => p.Email == email.Trim().ToLower(), cancellationToken);
@@ -133,11 +137,15 @@ public sealed class AcademicoRepository(AcademicoDbContext db) : IAcademicoRepos
     public Task<Aluno?> GetAlunoByAccountIdAsync(Guid accountId, CancellationToken cancellationToken) =>
         db.Alunos.SingleOrDefaultAsync(a => a.AccountId == accountId, cancellationToken);
 
+    public Task<Aluno?> GetAlunoByCpfAsync(string cpf, CancellationToken cancellationToken) =>
+        db.Alunos.FirstOrDefaultAsync(a => a.DadosPessoais.Cpf == cpf, cancellationToken);
+
     public Task<Aluno?> GetAlunoByEmailAsync(string email, CancellationToken cancellationToken) =>
         db.Alunos.SingleOrDefaultAsync(a => a.Email == email.Trim().ToLower(), cancellationToken);
 
-    public Task<Aluno?> GetAlunoByMatriculaAsync(string matricula, CancellationToken cancellationToken) =>
-        db.Alunos.SingleOrDefaultAsync(a => a.Matricula == matricula.Trim(), cancellationToken);
+    public async Task<bool> MatriculaEmUsoAsync(string matricula, CancellationToken cancellationToken) =>
+        await db.Alunos.AnyAsync(a => a.Matricula == matricula, cancellationToken)
+        || await db.Professores.AnyAsync(p => p.Matricula == matricula, cancellationToken);
 
     public async Task AddAlunoAsync(Aluno aluno, CancellationToken cancellationToken) =>
         await db.Alunos.AddAsync(aluno, cancellationToken);
@@ -197,6 +205,25 @@ public sealed class AcademicoRepository(AcademicoDbContext db) : IAcademicoRepos
 
     public async Task AddMaterialComplementarAsync(MaterialComplementar material, CancellationToken cancellationToken) =>
         await db.MateriaisComplementares.AddAsync(material, cancellationToken);
+
+    // Documentos anexos
+    public async Task<IReadOnlyList<DocumentoAnexoDto>> ListarDocumentosAnexosAsync(Guid pessoaId, CancellationToken cancellationToken) =>
+        await db.DocumentosAnexos
+            .Where(d => d.PessoaId == pessoaId)
+            .OrderBy(d => d.Tipo).ThenBy(d => d.CreatedAtUtc)
+            .Select(d => new DocumentoAnexoDto(d.Id, d.Tipo, d.NomeArquivo, d.ContentType, d.TamanhoBytes, d.CreatedAtUtc))
+            .ToListAsync(cancellationToken);
+
+    public Task<DocumentoAnexo?> GetDocumentoAnexoByIdAsync(Guid id, CancellationToken cancellationToken) =>
+        db.DocumentosAnexos.SingleOrDefaultAsync(d => d.Id == id, cancellationToken);
+
+    public async Task AddDocumentoAnexoAsync(DocumentoAnexo documento, CancellationToken cancellationToken) =>
+        await db.DocumentosAnexos.AddAsync(documento, cancellationToken);
+
+    public void RemoveDocumentoAnexo(DocumentoAnexo documento) => db.DocumentosAnexos.Remove(documento);
+
+    public Task RemoveDocumentosAnexosDaPessoaAsync(Guid pessoaId, CancellationToken cancellationToken) =>
+        db.DocumentosAnexos.Where(d => d.PessoaId == pessoaId).ExecuteDeleteAsync(cancellationToken);
 
     // Auditoria
     public async Task AddLogAsync(LogSistema log, CancellationToken cancellationToken) =>

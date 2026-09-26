@@ -1,3 +1,5 @@
+using FaeterjAcademico.Domain.Common;
+
 namespace FaeterjAcademico.Application.Teachers.Dtos;
 
 public sealed record DisponibilidadeDto(Guid Id, string Dia, string HoraInicio, string HoraFim);
@@ -6,21 +8,27 @@ public sealed record ProfessorDto(
     Guid Id,
     string Nome,
     string Email,
+    string Matricula,
     string? Telefone,
     bool Ativo,
-    IReadOnlyList<DisponibilidadeDto> Disponibilidades)
+    IReadOnlyList<DisponibilidadeDto> Disponibilidades,
+    DadosPessoais DadosPessoais,
+    FormacaoProfessor Formacao)
 {
     public static ProfessorDto FromEntity(Domain.Entities.Professor professor) => new(
         professor.Id,
         professor.Nome,
         professor.Email,
+        professor.Matricula,
         professor.Telefone,
         professor.Ativo,
         [.. professor.Disponibilidades.Select(d => new DisponibilidadeDto(
             d.Id,
             d.Slot.Dia.ToString(),
             d.Slot.HoraInicio.ToString("HH:mm"),
-            d.Slot.HoraFim.ToString("HH:mm")))]);
+            d.Slot.HoraFim.ToString("HH:mm")))],
+        professor.DadosPessoais,
+        professor.Formacao);
 }
 
 /// <summary>Só retornado na criação — a senha temporária não fica salva em lugar nenhum além do hash.</summary>

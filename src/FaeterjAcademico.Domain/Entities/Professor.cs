@@ -12,15 +12,18 @@ public class Professor : AuditableEntity
     public Guid AccountId { get; private set; }
     public string Nome { get; private set; } = string.Empty;
     public string Email { get; private set; } = string.Empty;
+    public string Matricula { get; private set; } = string.Empty;
     public string? Telefone { get; private set; }
     public bool Ativo { get; private set; } = true;
+    public DadosPessoais DadosPessoais { get; private set; } = DadosPessoais.Vazio;
+    public FormacaoProfessor Formacao { get; private set; } = FormacaoProfessor.Vazio;
 
     private readonly List<Disponibilidade> _disponibilidades = [];
     public IReadOnlyCollection<Disponibilidade> Disponibilidades => _disponibilidades.AsReadOnly();
 
     private Professor() { } // EF Core
 
-    public Professor(Guid accountId, string nome, string email, string? telefone = null)
+    public Professor(Guid accountId, string nome, string email, string matricula, string? telefone = null)
     {
         if (string.IsNullOrWhiteSpace(nome))
         {
@@ -30,14 +33,19 @@ public class Professor : AuditableEntity
         {
             throw new DomainException("Email do professor é obrigatório.");
         }
+        if (string.IsNullOrWhiteSpace(matricula))
+        {
+            throw new DomainException("Matrícula do professor é obrigatória.");
+        }
 
         AccountId = accountId;
         Nome = nome.Trim();
         Email = email.Trim().ToLowerInvariant();
+        Matricula = matricula.Trim();
         Telefone = ValidarTelefone(telefone);
     }
 
-    /// <summary>Email não entra aqui: é o login da Account e nunca é editável.</summary>
+    /// <summary>Email e matrícula não entram aqui: são identificadores fixos do professor.</summary>
     public void AtualizarDados(string nome, string? telefone)
     {
         if (string.IsNullOrWhiteSpace(nome))
@@ -47,6 +55,13 @@ public class Professor : AuditableEntity
 
         Nome = nome.Trim();
         Telefone = ValidarTelefone(telefone);
+        Touch();
+    }
+
+    public void AtualizarDocumentos(DadosPessoais dadosPessoais, FormacaoProfessor formacao)
+    {
+        DadosPessoais = dadosPessoais.Normalizar();
+        Formacao = formacao.Normalizar();
         Touch();
     }
 
