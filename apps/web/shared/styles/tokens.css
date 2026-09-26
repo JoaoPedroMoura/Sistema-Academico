@@ -57,8 +57,9 @@
   --opacity-disabled: 0.5;
 }
 
+/* Escuro: segue o sistema, a menos que o usuário tenha escolhido um tema (data-theme no <html>). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --color-background: #0e1317;
     --color-surface: #151c22;
     --color-foreground: #e6e9ec;
@@ -87,4 +88,34 @@
     --shadow-md: 0 6px 16px -4px #000000b3;
     --focus-ring: 0 0 0 2px #0e1317, 0 0 0 4px #6cbccc;
   }
+}
+
+:root[data-theme="dark"] {
+  --color-background: #0e1317;
+  --color-surface: #151c22;
+  --color-foreground: #e6e9ec;
+  --color-muted: #1b232a;
+  --color-muted-foreground: #9ba5af;
+  --color-border: #2a343d;
+  --color-border-strong: #6b7682;
+  --color-primary: #6cbccc;
+  --color-primary-foreground: #0a1a1f;
+  --color-secondary: #17303a;
+  --color-secondary-foreground: #cfe7ed;
+  --color-accent: #eb9460;
+  --color-accent-foreground: #1f0f05;
+  --color-accent-soft: #3a2214;
+  --color-destructive: #f28b7e;
+  --color-destructive-foreground: #200806;
+  --color-destructive-soft: #3b1a17;
+  --color-success: #6fcf9b;
+  --color-success-foreground: #07190f;
+  --color-success-soft: #143126;
+  --color-warning: #eab15a;
+  --color-warning-foreground: #1d1203;
+  --color-warning-soft: #35270f;
+  --color-ring: #6cbccc;
+  --shadow-sm: 0 1px 2px #00000066;
+  --shadow-md: 0 6px 16px -4px #000000b3;
+  --focus-ring: 0 0 0 2px #0e1317, 0 0 0 4px #6cbccc;
 }

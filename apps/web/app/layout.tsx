@@ -31,7 +31,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="pt-BR"
       className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
+      <head>
+        {/* Aplica o tema escolhido antes de pintar, pra não piscar o tema do sistema. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
       </body>
