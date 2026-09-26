@@ -4,14 +4,12 @@ import type { Professor } from "../types";
 
 interface TeacherTableProps {
   professores: Professor[];
-  selecionadoId: string | null;
-  onSelecionar: (id: string) => void;
   onEditar: (professor: Professor) => void;
   onExcluir: (id: string) => void;
   excluindo: boolean;
 }
 
-export function TeacherTable({ professores, selecionadoId, onSelecionar, onEditar, onExcluir, excluindo }: TeacherTableProps) {
+export function TeacherTable({ professores, onEditar, onExcluir, excluindo }: TeacherTableProps) {
   if (professores.length === 0) {
     return <p className="text-sm text-[var(--color-muted-foreground)]">Nenhum professor cadastrado.</p>;
   }
@@ -29,33 +27,21 @@ export function TeacherTable({ professores, selecionadoId, onSelecionar, onEdita
         </thead>
         <tbody>
           {professores.map((p) => (
-            <tr
-              key={p.id}
-              onClick={() => onSelecionar(p.id)}
-              className={`cursor-pointer border-t border-[var(--color-border)] hover:bg-[var(--color-muted)] ${
-                selecionadoId === p.id ? "bg-[var(--color-muted)]" : ""
-              }`}
-            >
+            <tr key={p.id} className="border-t border-[var(--color-border)]">
               <td className="px-3 py-2 font-medium">{p.nome}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{p.email}</td>
               <td className="px-3 py-2 text-[var(--color-muted-foreground)]">{p.disponibilidades.length}</td>
               <td className="space-x-3 whitespace-nowrap px-3 py-2 text-right">
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onEditar(p);
-                  }}
+                  onClick={() => onEditar(p)}
                   className="text-[var(--color-primary)] hover:underline focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                 >
                   Editar
                 </button>
                 <button
                   type="button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onExcluir(p.id);
-                  }}
+                  onClick={() => onExcluir(p.id)}
                   disabled={excluindo}
                   className="text-[var(--color-destructive)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
                 >

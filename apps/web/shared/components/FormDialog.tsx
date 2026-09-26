@@ -12,10 +12,12 @@ interface FormDialogProps {
   title: string;
   onClose: () => void;
   children: ReactNode;
+  /** Largura máxima (classe Tailwind). */
+  maxWidth?: string;
 }
 
 /** Modal nativo (<dialog>) que abre ao montar — renderize só quando deve estar aberto. */
-export function FormDialog({ title, onClose, children }: FormDialogProps) {
+export function FormDialog({ title, onClose, children, maxWidth = "max-w-md" }: FormDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export function FormDialog({ title, onClose, children }: FormDialogProps) {
     <dialog
       ref={dialogRef}
       onClose={onClose}
-      className="m-auto w-full max-w-md rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-inherit backdrop:bg-black/60"
+      className={`m-auto w-full ${maxWidth} rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-inherit backdrop:bg-black/60`}
     >
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-sm font-medium">{title}</h2>
@@ -45,13 +47,24 @@ export function FormDialog({ title, onClose, children }: FormDialogProps) {
 }
 
 /** Tela pós-criação mostrando a senha temporária gerada para a nova conta. */
-export function SenhaTemporaria({ senha, destinatario, onClose }: { senha: string; destinatario: string; onClose: () => void }) {
+export function SenhaTemporaria({
+  senha,
+  destinatario,
+  onClose,
+  children,
+}: {
+  senha: string;
+  destinatario: string;
+  onClose: () => void;
+  children?: ReactNode;
+}) {
   return (
     <div className="space-y-3">
       <div className="rounded-md bg-[var(--color-muted)] p-3 text-sm">
         Conta criada. Senha temporária (compartilhe com o {destinatario}):{" "}
         <code className="font-mono font-semibold">{senha}</code>
       </div>
+      {children}
       <button type="button" onClick={onClose} className={`w-full ${primaryButtonClass}`}>
         Fechar
       </button>

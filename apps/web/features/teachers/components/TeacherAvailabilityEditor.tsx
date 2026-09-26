@@ -1,99 +1,29 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { useProfessor, useAdicionarDisponibilidade, useRemoverDisponibilidade } from "../hooks/useTeachers";
-import { DIAS_SEMANA } from "../types";
+import { AvailabilityGrid } from "./AvailabilityGrid";
 
-interface TeacherAvailabilityEditorProps {
-  professorId: string;
-}
-
-/** Edita a disponibilidade de um professor — o Admin usa isso hoje; vira tela self-service do professor na área dele. */
-export function TeacherAvailabilityEditor({ professorId }: TeacherAvailabilityEditorProps) {
+/** Disponibilidade de um professor editada pelo Admin (dentro do modal de professor). */
+export function TeacherAvailabilityEditor({ professorId }: { professorId: string }) {
   const { data: professor } = useProfessor(professorId);
-  const [dia, setDia] = useState<string>(DIAS_SEMANA[0]);
-  const [horaInicio, setHoraInicio] = useState("07:00");
-  const [horaFim, setHoraFim] = useState("07:50");
   const adicionar = useAdicionarDisponibilidade(professorId);
   const remover = useRemoverDisponibilidade(professorId);
-
-  function handleSubmit(event: FormEvent) {
-    event.preventDefault();
-    adicionar.mutate({ dia, horaInicio, horaFim });
-  }
+  const erro = adicionar.error ?? remover.error;
 
   if (!professor) {
-    return null;
+    return <p className="text-sm text-[var(--color-muted-foreground)]">Carregando…</p>;
   }
 
   return (
-    <div className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-      <h2 className="text-sm font-medium">Disponibilidade de {professor.nome}</h2>
-
-      {professor.disponibilidades.length === 0 ? (
-        <p className="text-sm text-[var(--color-muted-foreground)]">Nenhuma disponibilidade cadastrada.</p>
-      ) : (
-        <ul className="space-y-1 text-sm">
-          {professor.disponibilidades.map((d) => (
-            <li key={d.id} className="flex items-center justify-between rounded-md bg-[var(--color-muted)] px-3 py-1.5">
-              <span>
-                {d.dia} · <span className="font-mono tabular-nums">{d.horaInicio} – {d.horaFim}</span>
-              </span>
-              <button
-                type="button"
-                onClick={() => remover.mutate(d.id)}
-                disabled={remover.isPending}
-                className="text-[var(--color-destructive)] hover:underline disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
-              >
-                Remover
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <form onSubmit={handleSubmit} className="flex flex-wrap items-end gap-2">
-        <div className="space-y-1">
-          <label className="text-xs text-[var(--color-muted-foreground)]">Dia</label>
-          <select
-            value={dia}
-            onChange={(e) => setDia(e.target.value)}
-            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
-          >
-            {DIAS_SEMANA.map((d) => (
-              <option key={d} value={d}>
-                {d}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="space-y-1">
-          <label className="text-xs text-[var(--color-muted-foreground)]">Início</label>
-          <input
-            type="time"
-            value={horaInicio}
-            onChange={(e) => setHoraInicio(e.target.value)}
-            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
-          />
-        </div>
-        <div className="space-y-1">
-          <label className="text-xs text-[var(--color-muted-foreground)]">Fim</label>
-          <input
-            type="time"
-            value={horaFim}
-            onChange={(e) => setHoraFim(e.target.value)}
-            className="rounded-md border border-[var(--color-border-strong)] bg-[var(--color-surface)] px-2 py-1.5 text-sm outline-none focus:border-[var(--color-ring)] focus:shadow-[var(--focus-ring)]"
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={adicionar.isPending}
-          className="rounded-md bg-[var(--color-primary)] px-3 py-1.5 text-sm font-medium text-[var(--color-primary-foreground)] disabled:opacity-50 focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
-        >
-          Adicionar
-        </button>
-      </form>
-      {adicionar.isError && <p className="text-sm text-[var(--color-destructive)]">{adicionar.error.message}</p>}
+    <div className="space-y-2">
+      <h3 className="text-sm font-medium">Disponibilidade</h3>
+      <AvailabilityGrid
+        disponibilidades={professor.disponibilidades}
+        onAdicionar={(input) => adicionar.mutate(input)}
+        onRemover={(id) => remover.mutate(id)}
+        pendente={adicionar.isPending || remover.isPending}
+      />
+      {erro && <p className="text-sm text-[var(--color-destructive)]">{erro.message}</p>}
     </div>
   );
 }

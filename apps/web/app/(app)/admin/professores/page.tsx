@@ -4,13 +4,11 @@ import { useState } from "react";
 import { useProfessores, useExcluirProfessor } from "@/features/teachers/hooks/useTeachers";
 import { TeacherTable } from "@/features/teachers/components/TeacherTable";
 import { TeacherForm } from "@/features/teachers/components/TeacherForm";
-import { TeacherAvailabilityEditor } from "@/features/teachers/components/TeacherAvailabilityEditor";
 import { BackLink } from "@/shared/components/BackLink";
 import { primaryButtonClass } from "@/shared/components/FormDialog";
 import type { Professor } from "@/features/teachers/types";
 
 export default function ProfessoresPage() {
-  const [selecionadoId, setSelecionadoId] = useState<string | null>(null);
   const { data: professores, isLoading } = useProfessores();
   const excluir = useExcluirProfessor();
   // undefined = modal fechado; null = criando; Professor = editando
@@ -29,32 +27,18 @@ export default function ProfessoresPage() {
         <TeacherForm key={emEdicao?.id ?? "novo"} professor={emEdicao} onClose={() => setEmEdicao(undefined)} />
       )}
 
-      <div className="grid gap-6 lg:grid-cols-2">
-        <div className="space-y-4">
+      <div className="space-y-4">
           {isLoading ? (
             <p className="text-sm text-[var(--color-muted-foreground)]">Carregando…</p>
           ) : (
             <TeacherTable
               professores={professores ?? []}
-              selecionadoId={selecionadoId}
-              onSelecionar={setSelecionadoId}
               onEditar={setEmEdicao}
-              onExcluir={(id) => {
-                excluir.mutate(id, {
-                  onSuccess: () => {
-                    if (selecionadoId === id) setSelecionadoId(null);
-                  },
-                });
-              }}
+              onExcluir={(id) => excluir.mutate(id)}
               excluindo={excluir.isPending}
             />
           )}
           {excluir.isError && <p className="text-sm text-[var(--color-destructive)]">{excluir.error.message}</p>}
-        </div>
-
-        <div className="space-y-4">
-          {selecionadoId && <TeacherAvailabilityEditor professorId={selecionadoId} />}
-        </div>
       </div>
     </div>
   );
