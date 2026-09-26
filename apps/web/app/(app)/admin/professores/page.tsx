@@ -15,7 +15,10 @@ export default function ProfessoresPage() {
   return (
     <div className="space-y-6 p-8">
       <BackLink href="/admin" label="Área do Admin" />
-      <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Professores</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold">Professores</h1>
+        <TeacherForm />
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-4">
@@ -40,7 +43,6 @@ export default function ProfessoresPage() {
         </div>
 
         <div className="space-y-4">
-          <TeacherForm />
           {selecionadoId && <TeacherAvailabilityEditor professorId={selecionadoId} />}
         </div>
       </div>

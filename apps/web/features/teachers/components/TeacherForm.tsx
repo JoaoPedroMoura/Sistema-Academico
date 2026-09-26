@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { useCriarProfessor } from "../hooks/useTeachers";
 
 export function TeacherForm() {
@@ -9,6 +9,12 @@ export function TeacherForm() {
   const [telefone, setTelefone] = useState("");
   const [senhaGerada, setSenhaGerada] = useState<string | null>(null);
   const criar = useCriarProfessor();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  function fechar() {
+    setSenhaGerada(null);
+    criar.reset();
+  }
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -26,8 +32,30 @@ export function TeacherForm() {
   }
 
   return (
-    <div className="space-y-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4">
-      <h2 className="text-sm font-medium">Adicionar professor</h2>
+    <>
+      <button
+        type="button"
+        onClick={() => dialogRef.current?.showModal()}
+        className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-sm font-medium text-[var(--color-primary-foreground)] focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
+      >
+        Adicionar professor
+      </button>
+      <dialog
+        ref={dialogRef}
+        onClose={fechar}
+        className="m-auto w-full max-w-md space-y-3 rounded-[var(--radius-lg)] border border-[var(--color-border)] bg-[var(--color-surface)] p-4 text-inherit backdrop:bg-black/60"
+      >
+      <div className="flex items-center justify-between">
+        <h2 className="text-sm font-medium">Adicionar professor</h2>
+        <button
+          type="button"
+          aria-label="Fechar"
+          onClick={() => dialogRef.current?.close()}
+          className="rounded-md px-2 text-[var(--color-muted-foreground)] focus-visible:shadow-[var(--focus-ring)] focus-visible:outline-none"
+        >
+          ✕
+        </button>
+      </div>
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           type="text"
@@ -67,6 +95,7 @@ export function TeacherForm() {
           <code className="font-mono font-semibold">{senhaGerada}</code>
         </div>
       )}
-    </div>
+      </dialog>
+    </>
   );
 }
